@@ -14,13 +14,16 @@ export enum figureNames{
 export class Figure{
     color:Colors;
     square:Square;
-    logo: typeof logoType;
-    name: figureNames;
-    
-    constructor(color: Colors, name:figureNames, square: Square, logo:typeof logoType){
+    name: figureNames | null;
+    logo:typeof logoType | null;
+    id: number;
+
+    constructor(color: Colors, square: Square){
         this.color = color;
         this.square = square;
-        this.logo = logo;
-        this.name = name;
+        this.square.figure = this;
+        this.logo = null;
+        this.name = null;
+        this.id = Math.random();
     }
 }

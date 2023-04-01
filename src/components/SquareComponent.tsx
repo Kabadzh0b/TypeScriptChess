@@ -8,7 +8,9 @@ interface SquareProps{
 const SquareComponent: FunctionComponent<SquareProps> = ({square}) => {
     return(
         <div className={['square', square.color].join(' ')}>
-
+            <div className="figure">
+                {square.figure?.logo && <img src={square.figure.logo} alt="figure"/>}
+            </div>
         </div>
     )
 

@@ -36,3 +36,9 @@
 .black{
   background-color: rgb(189, 58, 1);
 }
+
+.square img{
+  width: 48px;
+  height: 48px;
+  position: relative;
+}

@@ -10,11 +10,14 @@ function App() {
     restart()
   }, [])
 
-  function restart() {
+  const restart = () => {
     const newBoard = new Board();
     newBoard.initCells()
+    newBoard.placePawns()
     setBoard(newBoard);
   }
+
+
 
   return (
     <div className="app">

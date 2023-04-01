@@ -1,5 +1,6 @@
 import { Square } from "./Square";
 import { Colors } from "./Colors";
+import { Pawn } from "./Pawn";
 export default class Board{
     squares: Square[][] = [];
 
@@ -15,6 +16,18 @@ export default class Board{
                 }
             }
             this.squares.push(row);
+        }
+    }
+    
+    public getSquare(x:number, y:number){
+        return this.squares[x][y];
+    }
+
+    public placePawns(){
+        for(let i = 0; i < 8; i++){
+            console.log(1);
+            new Pawn(Colors.BLACK,this.getSquare(1,i));
+            new Pawn(Colors.WHITE,this.getSquare(6,i));
         }
     }
 }

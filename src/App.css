@@ -1,0 +1,38 @@
+*{
+  margin:0;
+  padding:0;
+}
+
+.app{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.board{
+  width: calc(80px*8);
+  height: calc(80px*8);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.square{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.white{
+  background-color: rgb(255, 245, 171);
+}
+
+.black{
+  background-color: rgb(189, 58, 1);
+}

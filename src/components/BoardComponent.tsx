@@ -10,9 +10,15 @@ interface BoardProps{
 }
 const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
+    const [canGo, setCanGo] = useState<Square[] | null>(null); 
 
     const click = (square:Square) =>{
-        setSelectedSquare(square);
+        square === selectedSquare ? setSelectedSquare(null) : setSelectedSquare(square);
+    }
+
+    const move = (selectedSquare:Square, squareTo:Square) => {
+        squareTo.figure = selectedSquare?.figure;
+        selectedSquare.figure = null;
     }
 
     return(
@@ -24,7 +30,9 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                             square={square}
                             key = {square.id}
                             isSelected = {selectedSquare===square}
+                            selectedSquare={selectedSquare}
                             setIsSelected={click}
+                            move = {move}
                         />
                     )}
                 </React.Fragment>

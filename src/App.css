@@ -38,7 +38,11 @@
 }
 
 .square img{
-  width: 48px;
-  height: 48px;
+  width: 100px;
+  height: 100px;
   position: relative;
+}
+
+.selected{
+  background-color: green;
 }

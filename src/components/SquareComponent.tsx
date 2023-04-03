@@ -3,12 +3,14 @@ import { Square } from "../models/Square";
 
 interface SquareProps{
     square: Square;
+    isSelected: boolean;
+    setIsSelected: (square:Square) => void
 }
 
-const SquareComponent: FunctionComponent<SquareProps> = ({square}) => {
+const SquareComponent: FunctionComponent<SquareProps> = ({square, isSelected, setIsSelected}) => {
     return(
-        <div className={['square', square.color].join(' ')}>
-            <div className="figure">
+        <div onClick={() => setIsSelected(square)}  className={['square', square.color, isSelected ? "selected" : ""].join(' ')}>
+            <div className="figure" >
                 {square.figure?.logo && <img src={square.figure.logo} alt="figure"/>}
             </div>
         </div>

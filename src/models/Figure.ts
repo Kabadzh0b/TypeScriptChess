@@ -26,12 +26,17 @@ export class Figure{
         this.name = null;
         this.id = Math.random();
     }
-    public canGo(canGoArray:Square[],x:number,y:number){
+    public canGo(canGoArray:Square[],x:number,y:number): boolean{
         const sq:Square = this.square.board.getSquare(x,y);
-        if (sq.figure === null)canGoArray.push(sq)
+        if (sq.figure === null){
+            canGoArray.push(sq)
+            return true;
+        }
         else if (sq.figure.color !== this.color){
             canGoArray.push(sq)
+            return false;
         }
+        return false;
     }
     public canGoPush(){
         if(this.name === "bishop"){
@@ -40,34 +45,103 @@ export class Figure{
             let y:number = this.square.y+1;
             
             while(x < 8 && y < 8){
-                this.canGo(canGoArray,x,y);
+                if(!this.canGo(canGoArray,x,y)) break;
                 x++;
                 y++;
             }
             x = this.square.x+1;
             y = this.square.y-1;
             while(x < 8 && y >= 0){
-                this.canGo(canGoArray,x,y);
+                if(!this.canGo(canGoArray,x,y)) break;
                 x++;
                 y--;
             }
             x = this.square.x-1;
             y = this.square.y+1;
             while(x >= 0 && y < 8){
-                this.canGo(canGoArray,x,y);
+                if(!this.canGo(canGoArray,x,y)) break;
                 x--;
                 y++;
             }
             x = this.square.x-1;
             y = this.square.y-1;
             while(x >= 0 && y >= 0){
-                this.canGo(canGoArray,x,y);
+                if(!this.canGo(canGoArray,x,y)) break;
                 x--;
                 y--;
-            }
-        if (canGoArray.length === 0) return null;
+            }   
         return canGoArray;
         }
-        else return null;
+        else if (this.name === "pawn"){
+            const canGoArray:Square[] | null = [];
+            let x = this.square.x;
+            let y = this.square.y;
+            if(this.color === "white"){
+                if (x === 6){
+                    let sq:Square = this.square.board.getSquare(x-1,y);
+                    if (sq.figure === null){
+                        canGoArray.push(sq)
+                        sq = this.square.board.getSquare(x-2,y);
+                        if (sq.figure === null){
+                            canGoArray.push(sq)
+                        }
+                    }
+                }
+                else{
+                    let sq:Square = this.square.board.getSquare(x-1,y);
+                    if (sq.figure === null){
+                        canGoArray.push(sq);
+                    }
+                }
+                if(y === 7){
+                    let sq:Square = this.square.board.getSquare(x-1,y-1);
+                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                }
+                else if (y === 0){
+                    let sq = this.square.board.getSquare(x-1,y+1);
+                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                }
+                else{
+                    let sq:Square = this.square.board.getSquare(x-1,y-1);
+                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                    sq = this.square.board.getSquare(x-1,y+1);
+                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                }
+            }
+            else{
+                if (x === 1){
+                    let sq:Square = this.square.board.getSquare(x+1,y);
+                    if (sq.figure === null){
+                        canGoArray.push(sq)
+                        sq = this.square.board.getSquare(x+2,y);
+                        if (sq.figure === null){
+                            canGoArray.push(sq)
+                        }
+                    }
+                }
+                else{
+                    let sq:Square = this.square.board.getSquare(x+1,y);
+                    if (sq.figure === null){
+                        canGoArray.push(sq);
+                    }
+                }
+                if(y === 7){
+                    let sq:Square = this.square.board.getSquare(x+1,y-1);
+                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                }
+                else if (y === 0){
+                    let sq = this.square.board.getSquare(x+1,y+1);
+                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                }
+                else{
+                    let sq:Square = this.square.board.getSquare(x+1,y-1);
+                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                    sq = this.square.board.getSquare(x+1,y+1);
+                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                }
+            }
+            return canGoArray;
+        }
+        return null;
     }
 }

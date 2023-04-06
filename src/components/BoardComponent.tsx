@@ -19,18 +19,21 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         }
         else{
             setSelectedSquare(square);
+            console.log("x = " + square.x);
             if(square.figure === null) setCanGo(null);
-            else if(square.figure.name === "bishop"){
-                const setCanGoArr:Square[] | null = square.figure.canGoPush()
-                setCanGo(setCanGoArr);
-            }
+            else setCanGo(square.figure.canGoPush());
         }
     }
 
     const move = (selectedSquare:Square, squareTo:Square) => {
-        squareTo.figure = selectedSquare.figure;        
-        selectedSquare.figure = null;
-        setSelectedSquare(null);
+        if(canGo?.includes(squareTo)){
+            squareTo.figure = selectedSquare.figure;
+            if (selectedSquare.figure !== null) selectedSquare.figure.square = squareTo;  
+            selectedSquare.figure = null;
+            setSelectedSquare(null);
+            setCanGo(null);
+        }
+        else return;
     }
 
     return(

@@ -19,6 +19,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const move = (selectedSquare:Square, squareTo:Square) => {
         squareTo.figure = selectedSquare?.figure;
         selectedSquare.figure = null;
+        setSelectedSquare(squareTo);
     }
 
     return(

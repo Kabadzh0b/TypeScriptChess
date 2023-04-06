@@ -13,13 +13,24 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const [canGo, setCanGo] = useState<Square[] | null>(null); 
 
     const click = (square:Square) =>{
-        square === selectedSquare ? setSelectedSquare(null) : setSelectedSquare(square);
+        if(square === selectedSquare){
+            setSelectedSquare(null);
+            setCanGo(null);
+        }
+        else{
+            setSelectedSquare(square);
+            if(square.figure === null) setCanGo(null);
+            else if(square.figure.name === "bishop"){
+                const setCanGoArr:Square[] | null = square.figure.canGoPush()
+                setCanGo(setCanGoArr);
+            }
+        }
     }
 
     const move = (selectedSquare:Square, squareTo:Square) => {
-        squareTo.figure = selectedSquare?.figure;
+        squareTo.figure = selectedSquare.figure;        
         selectedSquare.figure = null;
-        setSelectedSquare(squareTo);
+        setSelectedSquare(null);
     }
 
     return(
@@ -34,6 +45,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                             selectedSquare={selectedSquare}
                             setIsSelected={click}
                             move = {move}
+                            canGo = {canGo}
+                            setCanGo = {setCanGo}
                         />
                     )}
                 </React.Fragment>

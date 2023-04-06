@@ -46,3 +46,7 @@
 .selected{
   background-color: rgb(161, 255, 161);
 }
+
+.canGo{
+  background-color: red;
+}

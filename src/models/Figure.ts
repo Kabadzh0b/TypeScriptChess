@@ -7,7 +7,7 @@ export enum figureNames{
     QUEEN = "queen",
     ROOK = "rook",
     BISHOP = "bishop",
-    KNIGHT = "knigth",
+    KNIGHT = "knight",
     PAWN = "pawn",
 }
 

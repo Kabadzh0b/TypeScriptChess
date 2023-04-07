@@ -19,7 +19,6 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         }
         else{
             setSelectedSquare(square);
-            console.log("x = " + square.x);
             if(square.figure === null) setCanGo(null);
             else setCanGo(square.figure.canGoPush());
         }

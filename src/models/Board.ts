@@ -8,7 +8,6 @@ import { Queen } from "./Queen";
 import { King } from "./King";
 export default class Board{
     squares: Square[][] = [];
-
     public initCells(){
         for(let i = 0; i < 8; i++){
             const row: Square[] = [];

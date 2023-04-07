@@ -106,8 +106,8 @@ export class Figure{
         }
         else if (this.name === "pawn"){
             const canGoArray:Square[] | null = [];
-            let x = this.square.x;
-            let y = this.square.y;
+            let x:number = this.square.x;
+            let y:number = this.square.y;
             if(this.color === "white"){
                 if (x === 6){
                     let sq:Square = this.square.board.getSquare(x-1,y);
@@ -181,6 +181,44 @@ export class Figure{
         }
         else if(this.name === "rook"){
             return this.canGoPushHorizontal();
+        }
+        else if(this.name === "knight"){
+            const canGoArray:Square[] | null = [];
+            let x:number = this.square.x;
+            let y:number = this.square.y;
+            if(x > 1 && y > 0 && y < 7){
+                this.canGo(canGoArray,x-2,y-1);
+                this.canGo(canGoArray,x-2,y+1);
+            }
+            if(x < 6 && y > 0 && y < 7){
+                this.canGo(canGoArray,x+2,y-1);
+                this.canGo(canGoArray,x+2,y+1);
+            }
+            if(y > 1 && x > 0 && x < 7){
+                this.canGo(canGoArray,x+1,y-2);
+                this.canGo(canGoArray,x-1,y-2);
+            }
+            if(y < 6 && x > 0 && x < 7){
+                this.canGo(canGoArray,x+1,y+2);
+                this.canGo(canGoArray,x-1,y+2);
+            }
+            if(x === 0 && y === 0){
+                this.canGo(canGoArray, x+1, y+2);
+                this.canGo(canGoArray, x+2, y+1);
+            }
+            if(x === 0 && y === 7){
+                this.canGo(canGoArray, x+1, y-2);
+                this.canGo(canGoArray, x+2, y-1);
+            }
+            if(x === 7 && y === 0){
+                this.canGo(canGoArray, x-1, y+2);
+                this.canGo(canGoArray, x-2, y+1);
+            }
+            if(x === 7 && y === 7){
+                this.canGo(canGoArray, x-1, y-2);
+                this.canGo(canGoArray, x-2, y-1);
+            }
+            return canGoArray;
         }
         return null;
     }

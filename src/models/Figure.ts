@@ -38,39 +38,71 @@ export class Figure{
         }
         return false;
     }
+
+    private canGoPushDiagonal(){
+        const canGoArray:Square[] | null = [];
+        let x:number = this.square.x+1;
+        let y:number = this.square.y+1;
+        
+        while(x < 8 && y < 8){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x++;
+            y++;
+        }
+        x = this.square.x+1;
+        y = this.square.y-1;
+        while(x < 8 && y >= 0){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x++;
+            y--;
+        }
+        x = this.square.x-1;
+        y = this.square.y+1;
+        while(x >= 0 && y < 8){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x--;
+            y++;
+        }
+        x = this.square.x-1;
+        y = this.square.y-1;
+        while(x >= 0 && y >= 0){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x--;
+            y--;
+        }   
+        return canGoArray;
+    }
+
+    private canGoPushHorizontal(){
+        const canGoArray:Square[] | null = [];
+        let x:number = this.square.x+1;
+        let y:number = this.square.y;
+        while(x < 8){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x++;
+        }
+        x = this.square.x-1;
+        while(x >= 0){
+            if(!this.canGo(canGoArray,x,y)) break;
+            x--;
+        }
+        x = this.square.x;
+        y = this.square.y+1;
+        while(y < 8){
+            if(!this.canGo(canGoArray,x,y)) break;
+            y++;
+        }
+        y = this.square.y-1;
+        while(y >= 0){
+            if(!this.canGo(canGoArray,x,y)) break;
+            y--;
+        }   
+        return canGoArray;
+    }
+    
     public canGoPush(){
         if(this.name === "bishop"){
-            const canGoArray:Square[] | null = [];
-            let x:number = this.square.x+1;
-            let y:number = this.square.y+1;
-            
-            while(x < 8 && y < 8){
-                if(!this.canGo(canGoArray,x,y)) break;
-                x++;
-                y++;
-            }
-            x = this.square.x+1;
-            y = this.square.y-1;
-            while(x < 8 && y >= 0){
-                if(!this.canGo(canGoArray,x,y)) break;
-                x++;
-                y--;
-            }
-            x = this.square.x-1;
-            y = this.square.y+1;
-            while(x >= 0 && y < 8){
-                if(!this.canGo(canGoArray,x,y)) break;
-                x--;
-                y++;
-            }
-            x = this.square.x-1;
-            y = this.square.y-1;
-            while(x >= 0 && y >= 0){
-                if(!this.canGo(canGoArray,x,y)) break;
-                x--;
-                y--;
-            }   
-        return canGoArray;
+            return this.canGoPushDiagonal();
         }
         else if (this.name === "pawn"){
             const canGoArray:Square[] | null = [];
@@ -141,6 +173,14 @@ export class Figure{
                 }
             }
             return canGoArray;
+        }
+        else if(this.name === "queen"){
+            const canGoArray:Square[] | null = this.canGoPushDiagonal();
+            canGoArray.push(...this.canGoPushHorizontal());
+            return canGoArray;
+        }
+        else if(this.name === "rook"){
+            return this.canGoPushHorizontal();
         }
         return null;
     }

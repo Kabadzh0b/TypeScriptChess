@@ -8,6 +8,27 @@ import { Queen } from "./Queen";
 import { King } from "./King";
 export default class Board{
     squares: Square[][] = [];
+    whiteChecks:Square[] = []; 
+    blackChecks:Square[] = [];
+    whiteKing:King | null = null;
+    blackKing:King | null = null;
+
+    public setChecks = () => {
+        this.whiteChecks = [];
+        this.blackChecks = [];
+        this.squares.map((row:Square[], index:number) =>  
+            {row.map(square=> {
+                if(square.figure?.color === "white"){
+                    const canGoPush = square.figure.canGoPush();
+                    if (canGoPush !== null) this.whiteChecks.push(...canGoPush);
+            }
+                else if(square.figure?.color === "black"){
+                    const canGoPush = square.figure.canGoPush();
+                    if (canGoPush !== null) this.blackChecks.push(...canGoPush);
+                }
+        })})
+    };
+
     public initCells(){
         for(let i = 0; i < 8; i++){
             const row: Square[] = [];
@@ -61,8 +82,8 @@ export default class Board{
     }
 
     public placeKing(){
-        new King(Colors.BLACK, this.getSquare(0,4));
-        new King(Colors.WHITE, this.getSquare(7,4));
+        this.blackKing = new King(Colors.BLACK, this.getSquare(0,4));
+        this.whiteKing = new King(Colors.WHITE, this.getSquare(7,4));
     }
 
     public placeFigures(){

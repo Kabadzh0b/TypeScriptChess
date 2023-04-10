@@ -5,10 +5,9 @@ interface SquareProps{
     square: Square;
     isSelected: boolean;
     selectedSquare:Square | null;
-    setIsSelected: (square:Square) => void
-    move: (selectedSquare:Square, squareTo:Square) => void
-    canGo: Square[] | null
-    setCanGo: (squares:Square[] | null) => void
+    setIsSelected: (square:Square) => void;
+    move: (selectedSquare:Square, squareTo:Square) => void;
+    canGo: Square[] | null;
 }
 
 const SquareComponent: FunctionComponent<SquareProps> = ({square, isSelected, setIsSelected, move, selectedSquare, canGo}) => {

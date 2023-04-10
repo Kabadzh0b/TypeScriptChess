@@ -10,6 +10,19 @@ export class King extends Figure{
         this.logo = color === Colors.WHITE ? whiteLogo : blackLogo;
         this.name = figureNames.KING;
     }
+
+    public isChecked(){
+        if(this.color === "white" && this.square.board.blackChecks.includes(this.square)){
+            console.log("White king is under attack!");
+            return true;
+        }
+        else if(this.color === "black" && this.square.board.whiteChecks.includes(this.square)){
+            console.log("Black king is under attack!");
+            return true;
+        }
+        return false;
+    }
+
     public canGoPush(){
         const canGoArray:Square[] | null = [];
         let x:number = this.square.x;

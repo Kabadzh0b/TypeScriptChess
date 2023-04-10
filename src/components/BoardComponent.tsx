@@ -10,7 +10,9 @@ interface BoardProps{
 }
 const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
-    const [canGo, setCanGo] = useState<Square[] | null>(null); 
+    const [canGo, setCanGo] = useState<Square[] | null>(null);
+
+    
 
     const click = (square:Square) =>{
         if(square === selectedSquare){
@@ -22,7 +24,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             if(square.figure === null) setCanGo(null);
             else setCanGo(square.figure.canGoPush());
         }
-    }
+    };
 
     const move = (selectedSquare:Square, squareTo:Square) => {
         if(canGo?.includes(squareTo)){
@@ -31,8 +33,11 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             selectedSquare.figure = null;
             setSelectedSquare(null);
             setCanGo(null);
+            board.setChecks();
+            board.whiteKing?.isChecked();
+            board.blackKing?.isChecked();
         }
-    }
+    };
 
     return(
         <div className='board'>
@@ -47,12 +52,11 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                             setIsSelected={click}
                             move = {move}
                             canGo = {canGo}
-                            setCanGo = {setCanGo}
                         />
                     )}
                 </React.Fragment>
             )}
         </div>
-    )
+    );
 }
 export default BoardComponent;

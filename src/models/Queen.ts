@@ -10,4 +10,9 @@ export class Queen extends Figure{
         this.logo = color === Colors.WHITE ? whiteLogo : blackLogo;
         this.name = figureNames.QUEEN;
     }
+    public canGoPush(): Square[] | null{
+        const canGoArray:Square[] | null = super.canGoPushDiagonal();
+        canGoArray.push(...super.canGoPushHorizontalVertical());
+        return canGoArray;
+    }
 }

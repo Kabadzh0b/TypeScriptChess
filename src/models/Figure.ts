@@ -39,148 +39,7 @@ export class Figure{
         return false;
     }
 
-    private canGoPushPawn(){
-        const canGoArray:Square[] | null = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(this.color === "white"){
-            if (x === 6){
-                let sq:Square = this.square.board.getSquare(x-1,y);
-                if (sq.figure === null){
-                    canGoArray.push(sq)
-                    sq = this.square.board.getSquare(x-2,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq)
-                    }
-                }
-            }
-            else{
-                let sq:Square = this.square.board.getSquare(x-1,y);
-                if (sq.figure === null){
-                    canGoArray.push(sq);
-                }
-            }
-            if(y === 7){
-                let sq:Square = this.square.board.getSquare(x-1,y-1);
-                if(sq.figure?.color === "black") canGoArray.push(sq);
-            }
-            else if (y === 0){
-                let sq = this.square.board.getSquare(x-1,y+1);
-                if(sq.figure?.color === "black") canGoArray.push(sq);
-            }
-            else{
-                let sq:Square = this.square.board.getSquare(x-1,y-1);
-                if(sq.figure?.color === "black") canGoArray.push(sq);
-                sq = this.square.board.getSquare(x-1,y+1);
-                if(sq.figure?.color === "black") canGoArray.push(sq);
-            }
-        }
-        else{
-            if (x === 1){
-                let sq:Square = this.square.board.getSquare(x+1,y);
-                if (sq.figure === null){
-                    canGoArray.push(sq)
-                    sq = this.square.board.getSquare(x+2,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq)
-                    }
-                }
-            }
-            else{
-                let sq:Square = this.square.board.getSquare(x+1,y);
-                if (sq.figure === null){
-                    canGoArray.push(sq);
-                }
-            }
-            if(y === 7){
-                let sq:Square = this.square.board.getSquare(x+1,y-1);
-                if(sq.figure?.color === "white") canGoArray.push(sq);
-            }
-            else if (y === 0){
-                let sq = this.square.board.getSquare(x+1,y+1);
-                if(sq.figure?.color === "white") canGoArray.push(sq);
-            }
-            else{
-                let sq:Square = this.square.board.getSquare(x+1,y-1);
-                if(sq.figure?.color === "white") canGoArray.push(sq);
-                sq = this.square.board.getSquare(x+1,y+1);
-                if(sq.figure?.color === "white") canGoArray.push(sq);
-            }
-        }
-        return canGoArray;
-    }
-
-    private canGoPushKing(){
-        const canGoArray:Square[] | null = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(x > 0 && y > 0){
-            this.canGo(canGoArray,x-1,y-1);
-        }
-        if(x > 0 && y < 7){
-            this.canGo(canGoArray,x-1,y+1);
-        }
-        if(x > 0){
-            this.canGo(canGoArray,x-1,y);
-        }
-        if(x < 7 && y > 0){
-            this.canGo(canGoArray,x+1,y-1);
-        }
-        if(x < 7){
-            this.canGo(canGoArray,x+1,y);
-        }
-        if(x < 7 && y < 7){
-            this.canGo(canGoArray,x+1,y+1);
-        }
-        if(y>0){
-            this.canGo(canGoArray,x,y-1);
-        }
-        if(y<7){
-            this.canGo(canGoArray,x,y+1);
-        }
-        return canGoArray;
-    }
-
-    private canGoPushKnight(){
-        const canGoArray:Square[] | null = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(x > 1 && y > 0 && y < 7){
-            this.canGo(canGoArray,x-2,y-1);
-            this.canGo(canGoArray,x-2,y+1);
-        }
-        if(x < 6 && y > 0 && y < 7){
-            this.canGo(canGoArray,x+2,y-1);
-            this.canGo(canGoArray,x+2,y+1);
-        }
-        if(y > 1 && x > 0 && x < 7){
-            this.canGo(canGoArray,x+1,y-2);
-            this.canGo(canGoArray,x-1,y-2);
-        }
-        if(y < 6 && x > 0 && x < 7){
-            this.canGo(canGoArray,x+1,y+2);
-            this.canGo(canGoArray,x-1,y+2);
-        }
-        if(x === 0 && y === 0){
-            this.canGo(canGoArray, x+1, y+2);
-            this.canGo(canGoArray, x+2, y+1);
-        }
-        if(x === 0 && y === 7){
-            this.canGo(canGoArray, x+1, y-2);
-            this.canGo(canGoArray, x+2, y-1);
-        }
-        if(x === 7 && y === 0){
-            this.canGo(canGoArray, x-1, y+2);
-            this.canGo(canGoArray, x-2, y+1);
-        }
-        if(x === 7 && y === 7){
-            this.canGo(canGoArray, x-1, y-2);
-            this.canGo(canGoArray, x-2, y-1);
-        }
-        return canGoArray;
-    }
-
-    private canGoPushDiagonal(){
+    public canGoPushDiagonal(){
         const canGoArray:Square[] | null = [];
         let x:number = this.square.x+1;
         let y:number = this.square.y+1;
@@ -214,7 +73,7 @@ export class Figure{
         return canGoArray;
     }
 
-    private canGoPushHorizontal(){
+    public canGoPushHorizontalVertical(){
         const canGoArray:Square[] | null = [];
         let x:number = this.square.x+1;
         let y:number = this.square.y;
@@ -241,27 +100,7 @@ export class Figure{
         return canGoArray;
     }
     
-    public canGoPush(){
-        if(this.name === "bishop"){
-            return this.canGoPushDiagonal();
-        }
-        else if (this.name === "pawn"){
-            return this.canGoPushPawn();
-        }
-        else if(this.name === "queen"){
-            const canGoArray:Square[] | null = this.canGoPushDiagonal();
-            canGoArray.push(...this.canGoPushHorizontal());
-            return canGoArray;
-        }
-        else if(this.name === "rook"){
-            return this.canGoPushHorizontal();
-        }
-        else if(this.name === "knight"){
-            return this.canGoPushKnight();
-        }
-        else if(this.name === "king"){
-            return this.canGoPushKing();
-        }
-        return null;
+    public canGoPush():Square[] | null{
+        return this.canGoPush();
     }
 }

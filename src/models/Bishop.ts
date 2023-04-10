@@ -9,5 +9,10 @@ export class Bishop extends Figure{
         super(color, square);
         this.logo = color === Colors.WHITE ? whiteLogo : blackLogo;
         this.name = figureNames.BISHOP;
-    } 
+    }
+    
+    public canGoPush(): Square[] | null{
+        const canGoArray:Square[] | null = super.canGoPushDiagonal();
+        return canGoArray;
+    }
 }

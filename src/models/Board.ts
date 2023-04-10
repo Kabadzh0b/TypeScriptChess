@@ -10,8 +10,8 @@ export default class Board{
     squares: Square[][] = [];
     whiteChecks:Square[] = []; 
     blackChecks:Square[] = [];
-    whiteKing:King | null = null;
-    blackKing:King | null = null;
+    whiteKing!:King;
+    blackKing!:King; 
 
     public setChecks = () => {
         this.whiteChecks = [];

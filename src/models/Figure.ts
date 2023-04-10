@@ -2,19 +2,19 @@ import { Colors } from "./Colors";
 import { Square } from "./Square";
 import logoType from "../pictures/bb.png";
 
-export enum figureNames{
-    KING = "king",
-    QUEEN = "queen",
-    ROOK = "rook",
-    BISHOP = "bishop",
-    KNIGHT = "knight",
-    PAWN = "pawn",
+export enum FigureNames{
+    King = "king",
+    Queen = "queen",
+    Rook = "rook",
+    Bishop = "bishop",
+    Knight = "knight",
+    Pawn = "pawn",
 }
 
 export class Figure{
     color:Colors;
     square:Square;
-    name: figureNames | null;
+    name: FigureNames | null;
     logo:typeof logoType | null;
     id: number;
 
@@ -26,6 +26,7 @@ export class Figure{
         this.name = null;
         this.id = Math.random();
     }
+
     public canGo(canGoArray:Square[],x:number,y:number): boolean{
         const sq:Square = this.square.board.getSquare(x,y);
         if (sq.figure === null){
@@ -103,4 +104,6 @@ export class Figure{
     public canGoPush():Square[] | null{
         return this.canGoPush();
     }
+
+
 }

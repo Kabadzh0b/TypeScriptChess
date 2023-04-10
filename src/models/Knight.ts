@@ -1,5 +1,5 @@
 import { Colors } from "./Colors";
-import { Figure, figureNames } from "./Figure";
+import { Figure, FigureNames } from "./Figure";
 import { Square } from "./Square";
 import blackLogo from "../pictures/bn.png";
 import whiteLogo from "../pictures/wn.png";
@@ -7,8 +7,8 @@ import whiteLogo from "../pictures/wn.png";
 export class Knight extends Figure{
     constructor(color: Colors, square:Square){
         super(color, square);
-        this.logo = color === Colors.WHITE ? whiteLogo : blackLogo;
-        this.name = figureNames.KNIGHT;
+        this.logo = color === Colors.White? whiteLogo : blackLogo;
+        this.name = FigureNames.Knight;
     }
 
     public canGoPush(){

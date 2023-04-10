@@ -18,5 +18,4 @@ export class Square{
         this.id = x+y;
         this.board = board;
     }
-
 }

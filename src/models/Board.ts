@@ -13,7 +13,7 @@ export default class Board{
     whiteKing!:King;
     blackKing!:King; 
 
-    public setChecks = () => {
+    public setChecks = ():void => {
         this.whiteChecks = [];
         this.blackChecks = [];
         this.squares.map((row:Square[], index:number) =>  
@@ -29,64 +29,64 @@ export default class Board{
         })})
     };
 
-    public initCells(){
+    public initCells():void{
         for(let i = 0; i < 8; i++){
             const row: Square[] = [];
             for(let j = 0; j < 8; j++){
                 if((i+j)%2 === 0){
-                    row.push(new Square(this,i,j,Colors.WHITE,null))
+                    row.push(new Square(this,i,j,Colors.White,null))
                 }
                 else{
-                    row.push(new Square(this,i,j,Colors.BLACK,null))
+                    row.push(new Square(this,i,j,Colors.Black,null))
                 }
             }
             this.squares.push(row);
         }
     }
     
-    public getSquare(x:number, y:number){
+    public getSquare(x:number, y:number):Square{
         return this.squares[x][y];
     }
 
-    public placePawns(){
+    public placePawns():void{
         for(let i = 0; i < 8; i++){
-            new Pawn(Colors.BLACK,this.getSquare(1,i));
-            new Pawn(Colors.WHITE,this.getSquare(6,i));
+            new Pawn(Colors.Black,this.getSquare(1,i));
+            new Pawn(Colors.White,this.getSquare(6,i));
         }
     }
     
-    public placeRooks(){
-        new Rook(Colors.BLACK, this.getSquare(0,0));
-        new Rook(Colors.BLACK, this.getSquare(0,7));
-        new Rook(Colors.WHITE, this.getSquare(7,0));
-        new Rook(Colors.WHITE, this.getSquare(7,7));
+    public placeRooks():void{
+        new Rook(Colors.Black, this.getSquare(0,0));
+        new Rook(Colors.Black, this.getSquare(0,7));
+        new Rook(Colors.White, this.getSquare(7,0));
+        new Rook(Colors.White, this.getSquare(7,7));
     }
 
-    public placeKnights(){
-        new Knight(Colors.BLACK, this.getSquare(0,1));
-        new Knight(Colors.BLACK, this.getSquare(0,6));
-        new Knight(Colors.WHITE, this.getSquare(7,1));
-        new Knight(Colors.WHITE, this.getSquare(7,6));
+    public placeKnights():void{
+        new Knight(Colors.Black, this.getSquare(0,1));
+        new Knight(Colors.Black, this.getSquare(0,6));
+        new Knight(Colors.White, this.getSquare(7,1));
+        new Knight(Colors.White, this.getSquare(7,6));
     }
 
-    public placeBishops(){
-        new Bishop(Colors.BLACK, this.getSquare(0,2));
-        new Bishop(Colors.BLACK, this.getSquare(0,5));
-        new Bishop(Colors.WHITE, this.getSquare(7,2));
-        new Bishop(Colors.WHITE, this.getSquare(7,5));
+    public placeBishops():void{
+        new Bishop(Colors.Black, this.getSquare(0,2));
+        new Bishop(Colors.Black, this.getSquare(0,5));
+        new Bishop(Colors.White, this.getSquare(7,2));
+        new Bishop(Colors.White, this.getSquare(7,5));
     }
 
-    public placeQueen(){
-        new Queen(Colors.BLACK, this.getSquare(0,3));
-        new Queen(Colors.WHITE, this.getSquare(7,3));
+    public placeQueen():void{
+        new Queen(Colors.Black, this.getSquare(0,3));
+        new Queen(Colors.White, this.getSquare(7,3));
     }
 
-    public placeKing(){
-        this.blackKing = new King(Colors.BLACK, this.getSquare(0,4));
-        this.whiteKing = new King(Colors.WHITE, this.getSquare(7,4));
+    public placeKing():void{
+        this.blackKing = new King(Colors.Black, this.getSquare(0,4));
+        this.whiteKing = new King(Colors.White, this.getSquare(7,4));
     }
 
-    public placeFigures(){
+    public placeFigures():void{
         this.placePawns();
         this.placeRooks();
         this.placeKnights();

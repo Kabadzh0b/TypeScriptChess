@@ -2,6 +2,8 @@ import React, { FunctionComponent, useState } from 'react';
 import SquareComponent from './SquareComponent';
 import Board from '../models/Board';
 import { Square } from '../models/Square';
+import { Colors } from '../models/Colors';
+import { King } from '../models/King';
 
 
 interface BoardProps{
@@ -11,8 +13,10 @@ interface BoardProps{
 const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
     const [canGo, setCanGo] = useState<Square[] | null>(null);
+    const [turn, setTurn] = useState<Colors>(Colors.White)
 
-    
+    let whiteKing:King = board.whiteKing;
+    let blackKing:King = board.blackKing;
 
     const click = (square:Square) =>{
         if(square === selectedSquare){
@@ -27,15 +31,24 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     };
 
     const move = (selectedSquare:Square, squareTo:Square) => {
-        if(canGo?.includes(squareTo)){
+        if(selectedSquare.figure?.color === turn && canGo?.includes(squareTo)){
             squareTo.figure = selectedSquare.figure;
-            if (selectedSquare.figure !== null) selectedSquare.figure.square = squareTo;  
+            selectedSquare.figure.square = squareTo; 
             selectedSquare.figure = null;
+            board.setChecks();
+            if (turn === "white" ? !whiteKing.isChecked() : !blackKing.isChecked()){
+                if(turn === Colors.White) setTurn(Colors.Black);
+                else setTurn(Colors.White);
+            }
+            else{
+                selectedSquare.figure = squareTo.figure;
+                squareTo.figure.square = selectedSquare;
+                squareTo.figure = null;
+            } 
             setSelectedSquare(null);
             setCanGo(null);
-            board.setChecks();
-            board.whiteKing?.isChecked();
-            board.blackKing?.isChecked();
+            
+            
         }
     };
 

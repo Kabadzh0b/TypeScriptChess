@@ -34,10 +34,10 @@ export default class Board{
             const row: Square[] = [];
             for(let j = 0; j < 8; j++){
                 if((i+j)%2 === 0){
-                    row.push(new Square(this,i,j,Colors.White,null))
+                    row.push(new Square(this,i,j,Colors.White,null));
                 }
                 else{
-                    row.push(new Square(this,i,j,Colors.Black,null))
+                    row.push(new Square(this,i,j,Colors.Black,null));
                 }
             }
             this.squares.push(row);

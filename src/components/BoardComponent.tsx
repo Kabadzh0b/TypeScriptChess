@@ -47,8 +47,10 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             } 
             setSelectedSquare(null);
             setCanGo(null);
-            
-            
+        }
+        else{
+            setCanGo(null);
+            setSelectedSquare(null);
         }
     };
 

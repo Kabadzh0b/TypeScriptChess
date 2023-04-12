@@ -23,6 +23,34 @@ export class King extends Figure{
         return false;
     }
 
+    public isCheckmate = (): boolean => {
+        return this.square.board.squares.some((row: Square[], index: number) =>
+          row.some((square: Square) => {
+            if (square.figure !== null && square.figure.color === this.color) {
+              const canGoPush: Square[] | null = square.figure.canGoPush();
+              if (canGoPush !== null) {
+                for (let i = 0; i < canGoPush.length; i++) {
+                  canGoPush[i].figure = square.figure;
+                  square.figure!.square = canGoPush[i];
+                  square.figure = null;
+                  this.square.board.setChecks();
+                  if (!this.isChecked()) {
+                    square.figure = canGoPush[i].figure;
+                    canGoPush[i].figure!.square = square;
+                    canGoPush[i].figure = null;
+                    return false; // not a checkmate position
+                  }
+                  square.figure = canGoPush[i].figure;
+                  canGoPush[i].figure!.square = square;
+                  canGoPush[i].figure = null;
+                }
+              }
+            }
+            return true; // continue searching
+          })
+        );
+      };
+
     public canGoPush(){
         const canGoArray:Square[] | null = [];
         let x:number = this.square.x;

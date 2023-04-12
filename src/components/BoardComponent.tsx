@@ -37,8 +37,22 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             selectedSquare.figure = null;
             board.setChecks();
             if (turn === "white" ? !whiteKing.isChecked() : !blackKing.isChecked()){
-                if(turn === Colors.White) setTurn(Colors.Black);
-                else setTurn(Colors.White);
+                if(turn === Colors.White){
+                    if(blackKing.isChecked()){
+                        if(blackKing.isCheckmate()){
+                            console.log("White wins");
+                        }
+                    }
+                    setTurn(Colors.Black);
+                } 
+                else{
+                    if(whiteKing.isChecked()){
+                        if(whiteKing.isCheckmate()){
+                            console.log("Black wins");
+                        }
+                    }
+                    setTurn(Colors.White);
+                } 
             }
             else{
                 selectedSquare.figure = squareTo.figure;

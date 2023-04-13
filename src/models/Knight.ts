@@ -12,7 +12,7 @@ export class Knight extends Figure{
     }
 
     public canGoPush(){
-        const canGoArray:Square[] | null = [];
+        const canGoArray:Square[] = [];
         let x:number = this.square.x;
         let y:number = this.square.y;
         if(x > 1 && y > 0 && y < 7){

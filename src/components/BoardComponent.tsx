@@ -13,7 +13,7 @@ interface BoardProps{
 const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
     const [canGo, setCanGo] = useState<Square[] | null>(null);
-    const [turn, setTurn] = useState<Colors>(Colors.White)
+    const [turn, setTurn] = useState<Colors | string>(Colors.White)
 
     let whiteKing:King = board.whiteKing;
     let blackKing:King = board.blackKing;
@@ -40,7 +40,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 if(turn === Colors.White){
                     if(blackKing.isChecked()){
                         if(blackKing.isCheckmate()){
-                            console.log("White wins");
+                            setTurn("White wins");
+                            return; 
                         }
                     }
                     setTurn(Colors.Black);
@@ -48,7 +49,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 else{
                     if(whiteKing.isChecked()){
                         if(whiteKing.isCheckmate()){
-                            console.log("Black wins");
+                            setTurn("Black wins");
+                            return;
                         }
                     }
                     setTurn(Colors.White);
@@ -69,23 +71,29 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     };
 
     return(
-        <div className='board'>
-            {board.squares.map((row:Square[], index:number) =>  
-                <React.Fragment key={index}>
-                    {row.map(square=>   
-                        <SquareComponent 
-                            square={square}
-                            key = {square.id}
-                            isSelected = {selectedSquare===square}
-                            selectedSquare={selectedSquare}
-                            setIsSelected={click}
-                            move = {move}
-                            canGo = {canGo}
-                        />
-                    )}
-                </React.Fragment>
-            )}
+        <div>
+            <div>
+                <h1>Turn: {turn}</h1>
+            </div>
+            <div className='board'>
+                {board.squares.map((row:Square[], index:number) =>  
+                    <React.Fragment key={index}>
+                        {row.map(square=>   
+                            <SquareComponent 
+                                square={square}
+                                key = {square.id}
+                                isSelected = {selectedSquare===square}
+                                selectedSquare={selectedSquare}
+                                setIsSelected={click}
+                                move = {move}
+                                canGo = {canGo}
+                            />
+                        )}
+                    </React.Fragment>
+                )}
+            </div>
         </div>
+        
     );
 }
 export default BoardComponent;

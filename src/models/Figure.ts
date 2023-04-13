@@ -9,6 +9,7 @@ export enum FigureNames{
     Bishop = "bishop",
     Knight = "knight",
     Pawn = "pawn",
+    Null = "null",
 }
 
 export class Figure{
@@ -41,7 +42,7 @@ export class Figure{
     }
 
     public canGoPushDiagonal(){
-        const canGoArray:Square[] | null = [];
+        const canGoArray:Square[] = [];
         let x:number = this.square.x+1;
         let y:number = this.square.y+1;
         
@@ -75,7 +76,7 @@ export class Figure{
     }
 
     public canGoPushHorizontalVertical(){
-        const canGoArray:Square[] | null = [];
+        const canGoArray:Square[] = [];
         let x:number = this.square.x+1;
         let y:number = this.square.y;
         while(x < 8){
@@ -101,9 +102,7 @@ export class Figure{
         return canGoArray;
     }
     
-    public canGoPush():Square[] | null{
+    public canGoPush():Square[]{
         return this.canGoPush();
     }
-
-
 }

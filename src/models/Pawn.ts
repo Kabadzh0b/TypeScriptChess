@@ -12,7 +12,7 @@ export class Pawn extends Figure{
     }
 
     public canGoPush(){
-        const canGoArray:Square[] | null = [];
+        const canGoArray:Square[] = [];
         let x:number = this.square.x;
         let y:number = this.square.y;
         if(this.color === "white"){

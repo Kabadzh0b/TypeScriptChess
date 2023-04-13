@@ -10,8 +10,8 @@ export class Queen extends Figure{
         this.logo = color === Colors.White? whiteLogo : blackLogo;
         this.name = FigureNames.Queen;
     }
-    public canGoPush(): Square[] | null{
-        const canGoArray:Square[] | null = super.canGoPushDiagonal();
+    public canGoPush(): Square[]{
+        const canGoArray:Square[] = super.canGoPushDiagonal();
         canGoArray.push(...super.canGoPushHorizontalVertical());
         return canGoArray;
     }

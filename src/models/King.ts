@@ -24,60 +24,60 @@ export class King extends Figure{
     }
 
     public isCheckmate = (): boolean => {
-        return this.square.board.squares.some((row: Square[], index: number) =>
+        return !this.square.board.squares.some((row: Square[], index: number) =>
           row.some((square: Square) => {
             if (square.figure !== null && square.figure.color === this.color) {
-              const canGoPush: Square[] | null = square.figure.canGoPush();
-              if (canGoPush !== null) {
-                for (let i = 0; i < canGoPush.length; i++) {
-                  canGoPush[i].figure = square.figure;
-                  square.figure!.square = canGoPush[i];
+              const canGoPush: Square[] = square.figure.canGoPush();
+              if (canGoPush) {
+                for (const squareTo of canGoPush) {
+                  squareTo.figure = square.figure;
+                  square.figure.square = squareTo;
                   square.figure = null;
                   this.square.board.setChecks();
                   if (!this.isChecked()) {
-                    square.figure = canGoPush[i].figure;
-                    canGoPush[i].figure!.square = square;
-                    canGoPush[i].figure = null;
-                    return false; // not a checkmate position
+                    square.figure = squareTo.figure;
+                    squareTo.figure.square = square;
+                    squareTo.figure = null;
+                    return true; // not a checkmate position
                   }
-                  square.figure = canGoPush[i].figure;
-                  canGoPush[i].figure!.square = square;
-                  canGoPush[i].figure = null;
+                  square.figure = squareTo.figure;
+                  squareTo.figure.square = square;
+                  squareTo.figure = null;
                 }
               }
             }
-            return true; // continue searching
+            return false; // continue searching
           })
         );
-      };
+    };
 
     public canGoPush(){
         const canGoArray:Square[] | null = [];
         let x:number = this.square.x;
         let y:number = this.square.y;
         if(x > 0 && y > 0){
-            this.canGo(canGoArray,x-1,y-1);
+            super.canGo(canGoArray,x-1,y-1);
         }
         if(x > 0 && y < 7){
-            this.canGo(canGoArray,x-1,y+1);
+            super.canGo(canGoArray,x-1,y+1);
         }
         if(x > 0){
-            this.canGo(canGoArray,x-1,y);
+            super.canGo(canGoArray,x-1,y);
         }
         if(x < 7 && y > 0){
-            this.canGo(canGoArray,x+1,y-1);
+            super.canGo(canGoArray,x+1,y-1);
         }
         if(x < 7){
-            this.canGo(canGoArray,x+1,y);
+            super.canGo(canGoArray,x+1,y);
         }
         if(x < 7 && y < 7){
-            this.canGo(canGoArray,x+1,y+1);
+            super.canGo(canGoArray,x+1,y+1);
         }
         if(y>0){
-            this.canGo(canGoArray,x,y-1);
+            super.canGo(canGoArray,x,y-1);
         }
         if(y<7){
-            this.canGo(canGoArray,x,y+1);
+            super.canGo(canGoArray,x,y+1);
         }
         return canGoArray;
     }

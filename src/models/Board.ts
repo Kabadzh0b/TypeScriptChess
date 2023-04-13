@@ -12,37 +12,6 @@ export default class Board{
     blackChecks:Square[] = [];
     whiteKing!:King;
     blackKing!:King;
-    public isWhiteCheckmate = (): boolean => {
-        return this.squares.some((row: Square[], index: number) =>
-          row.some((square: Square) => {
-            if (square.figure !== null && square.figure.color === "white") {
-              const canGoPush: Square[] | null = square.figure.canGoPush();
-              if (canGoPush !== null) {
-                for (let i = 0; i < canGoPush.length; i++) {
-                  canGoPush[i].figure = square.figure;
-                  square.figure!.square = canGoPush[i];
-                  square.figure = null;
-                  this.setChecks();
-                  if (!this.whiteKing.isChecked()) {
-                    square.figure = canGoPush[i].figure;
-                    canGoPush[i].figure!.square = square;
-                    canGoPush[i].figure = null;
-                    return false; // not a checkmate position
-                  }
-                  square.figure = canGoPush[i].figure;
-                  canGoPush[i].figure!.square = square;
-                  canGoPush[i].figure = null;
-                }
-              }
-            }
-            return true; // continue searching
-          })
-        );
-      };
-
-    public isBlackCheckmate = ():void => {
-
-    }
 
     public setChecks = ():void => {
         this.whiteChecks = [];

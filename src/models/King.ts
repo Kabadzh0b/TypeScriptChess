@@ -30,6 +30,7 @@ export class King extends Figure{
               const canGoPush: Square[] = square.figure.canGoPush();
               if (canGoPush) {
                 for (const squareTo of canGoPush) {
+                  const squareToFigure = squareTo.figure;
                   squareTo.figure = square.figure;
                   square.figure.square = squareTo;
                   square.figure = null;
@@ -37,12 +38,14 @@ export class King extends Figure{
                   if (!this.isChecked()) {
                     square.figure = squareTo.figure;
                     squareTo.figure.square = square;
-                    squareTo.figure = null;
+                    squareTo.figure = squareToFigure;
+                    this.square.board.setChecks();
                     return true; // not a checkmate position
                   }
                   square.figure = squareTo.figure;
                   squareTo.figure.square = square;
-                  squareTo.figure = null;
+                  squareTo.figure = squareToFigure;
+                  this.square.board.setChecks();
                 }
               }
             }

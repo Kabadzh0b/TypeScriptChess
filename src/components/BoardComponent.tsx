@@ -32,6 +32,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
 
     const move = (selectedSquare:Square, squareTo:Square) => {
         if(selectedSquare.figure?.color === turn && canGo?.includes(squareTo)){
+            setSelectedSquare(null);
+            setCanGo(null);
             squareTo.figure = selectedSquare.figure;
             selectedSquare.figure.square = squareTo; 
             selectedSquare.figure = null;
@@ -60,13 +62,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 selectedSquare.figure = squareTo.figure;
                 squareTo.figure.square = selectedSquare;
                 squareTo.figure = null;
-            } 
-            setSelectedSquare(null);
-            setCanGo(null);
-        }
-        else{
-            setCanGo(null);
-            setSelectedSquare(null);
+            }
         }
     };
 

@@ -40,21 +40,17 @@ export class Figure{
 
     public canGoDiagonal(square:Square):boolean{
         if(!this.canGo(square))return false;
-        const maxX = Math.max(square.x, this.square.x);
-        const minX = Math.min(square.x, this.square.x);
-        const maxY = Math.max(square.y, this.square.y);
-        const minY = Math.min(square.y, this.square.y);
-        if(maxX-minX !== maxY-minY) return false;
-        let x = minX + 1;
-        let y = minY + 1;
-        while(x < maxX){
-            if(!this.square.board.getSquare(x,y).isEmpty()){
-                return false;
-            }
-            x++;
-            y++;
+
+        const absX:number = Math.abs(square.x - this.square.x);
+        const absY:number = Math.abs(square.y - this.square.y);
+        if(absX !== absY) return false;
+
+        const dx = this.square.x < square.x ? 1 : -1;
+        const dy = this.square.y < square.y ? 1 : -1;
+        
+        for(let i = 1; i < absX; i++){
+            if(!this.square.board.getSquare(this.square.x + dx*i, this.square.y + dy * i).isEmpty()) return false;
         }
-        debugger;
         return true;
     }
 

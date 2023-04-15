@@ -67,6 +67,10 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 squareTo.figure = null;
             }
         }
+        else{
+            setSelectedSquare(null);
+            setCanGo(null);
+        }
     };
 
     return(

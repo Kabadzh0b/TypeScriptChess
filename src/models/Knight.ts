@@ -11,42 +11,23 @@ export class Knight extends Figure{
         this.name = FigureNames.Knight;
     }
 
+    public canGo(square: Square): boolean {
+        if(!super.canGo(square))return false;
+        const dx = Math.abs(square.x - this.square.x);
+        const dy = Math.abs(square.y - this.square.y);
+        if((dx === 1 && dy === 2) || (dx === 2 && dy === 1)){
+            return true;
+        }
+        return false;
+    }
+
     public canGoPush(){
         const canGoArray:Square[] = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(x > 1 && y > 0 && y < 7){
-            this.canGo(canGoArray,x-2,y-1);
-            this.canGo(canGoArray,x-2,y+1);
-        }
-        if(x < 6 && y > 0 && y < 7){
-            this.canGo(canGoArray,x+2,y-1);
-            this.canGo(canGoArray,x+2,y+1);
-        }
-        if(y > 1 && x > 0 && x < 7){
-            this.canGo(canGoArray,x+1,y-2);
-            this.canGo(canGoArray,x-1,y-2);
-        }
-        if(y < 6 && x > 0 && x < 7){
-            this.canGo(canGoArray,x+1,y+2);
-            this.canGo(canGoArray,x-1,y+2);
-        }
-        if(x === 0 && y === 0){
-            this.canGo(canGoArray, x+1, y+2);
-            this.canGo(canGoArray, x+2, y+1);
-        }
-        if(x === 0 && y === 7){
-            this.canGo(canGoArray, x+1, y-2);
-            this.canGo(canGoArray, x+2, y-1);
-        }
-        if(x === 7 && y === 0){
-            this.canGo(canGoArray, x-1, y+2);
-            this.canGo(canGoArray, x-2, y+1);
-        }
-        if(x === 7 && y === 7){
-            this.canGo(canGoArray, x-1, y-2);
-            this.canGo(canGoArray, x-2, y-1);
-        }
+        this.square.board.squares.forEach(row => {
+            row.forEach(square => {
+                if(this.canGo(square))canGoArray.push(square);
+            });
+        });
         return canGoArray;
     }
 }

@@ -26,7 +26,9 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         else{
             setSelectedSquare(square);
             if(square.figure === null) setCanGo(null);
-            else setCanGo(square.figure.canGoPush());
+            else {
+                setCanGo(square.figure.canGoPush());
+            }
         }
     };
 
@@ -37,7 +39,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             squareTo.figure = selectedSquare.figure;
             selectedSquare.figure.square = squareTo; 
             selectedSquare.figure = null;
-            board.setChecks();
+            //board.setChecks();
+            
             if (turn === "white" ? !whiteKing.isChecked() : !blackKing.isChecked()){
                 if(turn === Colors.White){
                     if(blackKing.isChecked()){

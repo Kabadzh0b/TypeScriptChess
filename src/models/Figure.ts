@@ -28,81 +28,67 @@ export class Figure{
         this.id = Math.random();
     }
 
-    public canGo(canGoArray:Square[],x:number,y:number): boolean{
-        const sq:Square = this.square.board.getSquare(x,y);
-        if (sq.figure === null){
-            canGoArray.push(sq)
+    public canGo(square:Square): boolean{
+        if (square.figure === null){
             return true;
         }
-        else if (sq.figure.color !== this.color){
-            canGoArray.push(sq)
-            return false;
+        else if (square.figure.color !== this.color){
+            return true;
         }
         return false;
     }
 
-    public canGoPushDiagonal(){
-        const canGoArray:Square[] = [];
-        let x:number = this.square.x+1;
-        let y:number = this.square.y+1;
-        
-        while(x < 8 && y < 8){
-            if(!this.canGo(canGoArray,x,y)) break;
+    public canGoDiagonal(square:Square):boolean{
+        if(!this.canGo(square))return false;
+        const maxX = Math.max(square.x, this.square.x);
+        const minX = Math.min(square.x, this.square.x);
+        const maxY = Math.max(square.y, this.square.y);
+        const minY = Math.min(square.y, this.square.y);
+        if(maxX-minX !== maxY-minY) return false;
+        let x = minX + 1;
+        let y = minY + 1;
+        while(x < maxX){
+            if(!this.square.board.getSquare(x,y).isEmpty()){
+                return false;
+            }
             x++;
             y++;
         }
-        x = this.square.x+1;
-        y = this.square.y-1;
-        while(x < 8 && y >= 0){
-            if(!this.canGo(canGoArray,x,y)) break;
-            x++;
-            y--;
-        }
-        x = this.square.x-1;
-        y = this.square.y+1;
-        while(x >= 0 && y < 8){
-            if(!this.canGo(canGoArray,x,y)) break;
-            x--;
-            y++;
-        }
-        x = this.square.x-1;
-        y = this.square.y-1;
-        while(x >= 0 && y >= 0){
-            if(!this.canGo(canGoArray,x,y)) break;
-            x--;
-            y--;
-        }   
-        return canGoArray;
+        debugger;
+        return true;
     }
 
-    public canGoPushHorizontalVertical(){
-        const canGoArray:Square[] = [];
-        let x:number = this.square.x+1;
-        let y:number = this.square.y;
-        while(x < 8){
-            if(!this.canGo(canGoArray,x,y)) break;
+    public canGoVertical(square:Square):boolean{
+        if(!this.canGo(square))return false;
+        if(square.y !== this.square.y)return false;
+        const maxX = Math.max(square.x, this.square.x);
+        const minX = Math.min(square.x, this.square.x);
+        let x = minX + 1;
+        while(x < maxX){
+            if(!this.square.board.getSquare(x,square.y).isEmpty()){
+                return false;
+            }
             x++;
         }
-        x = this.square.x-1;
-        while(x >= 0){
-            if(!this.canGo(canGoArray,x,y)) break;
-            x--;
-        }
-        x = this.square.x;
-        y = this.square.y+1;
-        while(y < 8){
-            if(!this.canGo(canGoArray,x,y)) break;
+        return true;
+    }
+
+    public canGoHorizontal(square:Square):boolean{
+        if(!this.canGo(square))return false;
+        if(square.x !== this.square.x)return false;
+        const maxY = Math.max(square.y, this.square.y);
+        const minY = Math.min(square.y, this.square.y);
+        let y = minY + 1;
+        while(y < maxY){
+            if(!this.square.board.getSquare(square.x,y).isEmpty()){
+                return false;
+            } 
             y++;
         }
-        y = this.square.y-1;
-        while(y >= 0){
-            if(!this.canGo(canGoArray,x,y)) break;
-            y--;
-        }   
-        return canGoArray;
+        return true;
     }
-    
+
     public canGoPush():Square[]{
-        return this.canGoPush();
+        return [];
     }
 }

@@ -10,6 +10,11 @@ export class Square{
     id: number;
     board:Board;
 
+    public isEmpty():boolean{
+        if(this.figure === null)return true;
+        return false;
+    }
+
     constructor(board:Board, x:number,y:number,Color:Colors,Figure:Figure | null){
         this.x = x;
         this.y = y;

@@ -54,34 +54,23 @@ export class King extends Figure{
         );
     };
 
-    public canGoPush(){
-        const canGoArray:Square[] | null = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(x > 0 && y > 0){
-            super.canGo(canGoArray,x-1,y-1);
-        }
-        if(x > 0 && y < 7){
-            super.canGo(canGoArray,x-1,y+1);
-        }
-        if(x > 0){
-            super.canGo(canGoArray,x-1,y);
-        }
-        if(x < 7 && y > 0){
-            super.canGo(canGoArray,x+1,y-1);
-        }
-        if(x < 7){
-            super.canGo(canGoArray,x+1,y);
-        }
-        if(x < 7 && y < 7){
-            super.canGo(canGoArray,x+1,y+1);
-        }
-        if(y>0){
-            super.canGo(canGoArray,x,y-1);
-        }
-        if(y<7){
-            super.canGo(canGoArray,x,y+1);
-        }
+    public canGo(square:Square): boolean {
+        if(!super.canGo(square))return false;
+        const maxX = Math.max(square.x, this.square.x);
+        const minX = Math.min(square.x, this.square.x);
+        const maxY = Math.max(square.y, this.square.y);
+        const minY = Math.min(square.y, this.square.y);
+        if(maxX - minX <= 1 && maxY - minY <= 1) return true;
+        return false;
+    }
+
+    public canGoPush(): Square[]{
+        const canGoArray:Square[] = [];
+        this.square.board.squares.forEach(row => {
+            row.forEach(square => {
+                if(this.canGo(square))canGoArray.push(square);
+            });
+        });
         return canGoArray;
     }
 }

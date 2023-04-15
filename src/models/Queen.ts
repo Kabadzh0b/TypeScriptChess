@@ -11,8 +11,14 @@ export class Queen extends Figure{
         this.name = FigureNames.Queen;
     }
     public canGoPush(): Square[]{
-        const canGoArray:Square[] = super.canGoPushDiagonal();
-        canGoArray.push(...super.canGoPushHorizontalVertical());
+        const canGoArray:Square[] = [];
+        this.square.board.squares.forEach(row => {
+            row.forEach(square => {
+                if(super.canGoDiagonal(square))canGoArray.push(square);
+                else if(super.canGoVertical(square))canGoArray.push(square);
+                else if(super.canGoHorizontal(square))canGoArray.push(square);
+            });
+        });
         return canGoArray;
     }
 }

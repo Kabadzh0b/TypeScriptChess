@@ -11,8 +11,13 @@ export class Bishop extends Figure{
         this.name = FigureNames.Bishop;
     }
     
-    public canGoPush(): Square[] {
-        const canGoArray:Square[] = super.canGoPushDiagonal();
+    public canGoPush(): Square[]{
+        const canGoArray:Square[] = [];
+        this.square.board.squares.forEach(row => {
+            row.forEach(square => {
+                if(super.canGoDiagonal(square))canGoArray.push(square);
+            });
+        });
         return canGoArray;
     }
 }

@@ -10,8 +10,14 @@ export class Rook extends Figure{
         this.logo = color === Colors.White? whiteLogo : blackLogo;
         this.name = FigureNames.Rook;
     }
-    public canGoPush(): Square[] {
-        const canGoArray:Square[] = super.canGoPushHorizontalVertical();
+    public canGoPush(): Square[]{
+        const canGoArray:Square[] = [];
+        this.square.board.squares.forEach(row => {
+            row.forEach(square => {
+                if(super.canGoVertical(square))canGoArray.push(square);
+                else if(super.canGoHorizontal(square))canGoArray.push(square);
+            });
+        });
         return canGoArray;
     }
 }

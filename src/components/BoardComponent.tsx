@@ -39,7 +39,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
             squareTo.figure = selectedSquare.figure;
             selectedSquare.figure.square = squareTo; 
             selectedSquare.figure = null;
-            //board.setChecks();
+            board.setChecks();
             
             if (turn === "white" ? !whiteKing.isChecked() : !blackKing.isChecked()){
                 if(turn === Colors.White){

@@ -38,8 +38,8 @@
 }
 
 .square img{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   position: relative;
 }
 
@@ -49,4 +49,17 @@
 
 .canGo{
   background-color: red;
+}
+
+.chooseFigure{
+  height: 80px;
+  width: 80px;
+  display: inline-grid;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+}
+
+.hidden{
+  display: none;
 }

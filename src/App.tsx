@@ -12,7 +12,7 @@ function App() {
 
   const restart = () => {
     const newBoard = new Board();
-    newBoard.initCells();
+    newBoard.initSquares();
     newBoard.placeFigures();
     setBoard(newBoard);
   }

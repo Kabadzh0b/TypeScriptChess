@@ -13,6 +13,16 @@ export default class Board{
     whiteKing!:King;
     blackKing!:King;
 
+    FINAL_WHITE_SQUARES:Square[] = [];
+    FINAL_BLACK_SQUARES:Square[] = [];
+
+    private initFinalCells = () =>{
+        for(let i = 0; i < 8; i++){
+            this.FINAL_WHITE_SQUARES.push(this.getSquare(0,i));
+            this.FINAL_BLACK_SQUARES.push(this.getSquare(7,i));
+        };
+    }
+
     public setChecks = ():void => {
         this.whiteChecks = [];
         this.blackChecks = [];
@@ -29,7 +39,7 @@ export default class Board{
         })})
     };
 
-    public initCells():void{
+    public initSquares():void{
         for(let i = 0; i < 8; i++){
             const row: Square[] = [];
             for(let j = 0; j < 8; j++){
@@ -46,6 +56,10 @@ export default class Board{
     
     public getSquare(x:number, y:number):Square{
         return this.squares[x][y];
+    }
+
+    public pawnEvolution(square:Square, Figure:any){
+        new Figure(square.figure!.color, square);
     }
 /*
     public placeFiguresB():void{
@@ -106,13 +120,13 @@ export default class Board{
     }
 */
     public placeFigures(
-        WKPos:number[][] = [[7,4]],
+        WKPos:number[] = [7,4],
         WRPos:number[][] = [[7,0],[7,7]],
         WKnPos:number[][] = [[7,1],[7,6]],
         WBPos:number[][] = [[7,2],[7,5]],
         WQPos:number[][] = [[7,3]],
         WPPos:number[][] = [[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7]],
-        BKPos:number[][] = [[0,4]],
+        BKPos:number[] = [0,4],
         BRPos:number[][] = [[0,0],[0,7]],
         BKnPos:number[][] = [[0,1],[0,6]],
         BBPos:number[][] = [[0,2],[0,5]],
@@ -125,10 +139,11 @@ export default class Board{
         this.placeBishops();
         this.placeQueen();
         this.placeKing();*/
-        const WHITE_PLAYER_POSITIONS = [WKPos,WRPos,WKnPos,WBPos,WQPos,WPPos];
-        const BLACK_PLAYER_POSITIONS = [BKPos,BRPos,BKnPos,BBPos,BQPos,BPPos];
-        const TYPES = [King, Rook, Knight, Bishop, Queen, Pawn];
-        for(let i = 0; i < 6; i++){
+        this.initFinalCells();
+        const WHITE_PLAYER_POSITIONS = [WRPos,WKnPos,WBPos,WQPos,WPPos];
+        const BLACK_PLAYER_POSITIONS = [BRPos,BKnPos,BBPos,BQPos,BPPos];
+        const TYPES = [Rook, Knight, Bishop, Queen, Pawn];
+        for(let i = 0; i < 5; i++){
             let type = TYPES[i];
             let WPos:number[][] = WHITE_PLAYER_POSITIONS[i];
             let BPos:number[][] = BLACK_PLAYER_POSITIONS[i];
@@ -138,6 +153,8 @@ export default class Board{
             for(const position of BPos){
                 this.placeFigure(position, Colors.Black,type);
             }
+            this.whiteKing = new King(Colors.White, this.getSquare(WKPos[0],WKPos[1]));
+            this.blackKing = new King(Colors.Black, this.getSquare(BKPos[0],BKPos[1]));
         }
     }
 }

@@ -153,8 +153,8 @@ export default class Board{
             for(const position of BPos){
                 this.placeFigure(position, Colors.Black,type);
             }
-            this.whiteKing = new King(Colors.White, this.getSquare(WKPos[0],WKPos[1]));
-            this.blackKing = new King(Colors.Black, this.getSquare(BKPos[0],BKPos[1]));
         }
+        this.whiteKing = new King(Colors.White, this.getSquare(WKPos[0],WKPos[1]));
+        this.blackKing = new King(Colors.Black, this.getSquare(BKPos[0],BKPos[1]));
     }
 }

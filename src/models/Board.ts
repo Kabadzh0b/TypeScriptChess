@@ -26,8 +26,8 @@ export default class Board{
     public setChecks = ():void => {
         this.whiteChecks = [];
         this.blackChecks = [];
-        this.squares.map((row:Square[], index:number) =>  
-            {row.map(square=> {
+        this.squares.forEach((row:Square[]) =>  
+            {row.forEach(square=> {
                 if(square.figure?.color === "white"){
                     const canGoPush = square.figure.canGoPush();
                     if (canGoPush !== null) this.whiteChecks.push(...canGoPush);

@@ -28,11 +28,11 @@ export default class Board{
         this.blackChecks = [];
         this.squares.forEach((row:Square[]) =>  
             {row.forEach(square=> {
-                if(square.figure?.color === "white"){
+                if(square.figure?.color === Colors.White){
                     const canGoPush = square.figure.canGoPush();
                     if (canGoPush !== null) this.whiteChecks.push(...canGoPush);
             }
-                else if(square.figure?.color === "black"){
+                else if(square.figure?.color === Colors.Black){
                     const canGoPush = square.figure.canGoPush();
                     if (canGoPush !== null) this.blackChecks.push(...canGoPush);
                 }

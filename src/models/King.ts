@@ -12,11 +12,11 @@ export class King extends Figure{
     }
 
     public isChecked(){
-        if(this.color === "white" && this.square.board.blackChecks.includes(this.square)){
+        if(this.color === Colors.White && this.square.board.blackChecks.includes(this.square)){
             console.log("White king is under attack!");
             return true;
         }
-        else if(this.color === "black" && this.square.board.whiteChecks.includes(this.square)){
+        else if(this.color === Colors.Black && this.square.board.whiteChecks.includes(this.square)){
             console.log("Black king is under attack!");
             return true;
         }

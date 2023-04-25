@@ -35,17 +35,17 @@ export class Pawn extends Figure{
                 }
                 if(y === 7){
                     let sq:Square = this.square.board.getSquare(x-1,y-1);
-                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
                 }
                 else if (y === 0){
                     let sq = this.square.board.getSquare(x-1,y+1);
-                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
                 }
                 else{
                     let sq:Square = this.square.board.getSquare(x-1,y-1);
-                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
                     sq = this.square.board.getSquare(x-1,y+1);
-                    if(sq.figure?.color === "black") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
                 }
             }
         }    
@@ -69,17 +69,17 @@ export class Pawn extends Figure{
                 }
                 if(y === 7){
                     let sq:Square = this.square.board.getSquare(x+1,y-1);
-                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
                 }
                 else if (y === 0){
                     let sq = this.square.board.getSquare(x+1,y+1);
-                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
                 }
                 else{
                     let sq:Square = this.square.board.getSquare(x+1,y-1);
-                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
                     sq = this.square.board.getSquare(x+1,y+1);
-                    if(sq.figure?.color === "white") canGoArray.push(sq);
+                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
                 }
             }
         }

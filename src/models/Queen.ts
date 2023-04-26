@@ -10,6 +10,7 @@ export class Queen extends Figure{
         this.logo = color === Colors.White? whiteLogo : blackLogo;
         this.name = FigureNames.Queen;
     }
+
     public canGoPush(): Square[]{
         const canGoArray:Square[] = [];
         this.square.board.squares.forEach(row => {

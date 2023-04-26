@@ -94,7 +94,10 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                             }
                         }
                         setTurn(Colors.White);
-                    } 
+                    }
+                    if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
+                        squareTo.figure.moved = true;
+                    }
                 }
                 else{
                     setTurn("Choose figure");

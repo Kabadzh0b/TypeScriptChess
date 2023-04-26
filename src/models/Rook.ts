@@ -9,7 +9,11 @@ export class Rook extends Figure{
         super(color, square);
         this.logo = color === Colors.White? whiteLogo : blackLogo;
         this.name = FigureNames.Rook;
+        this.moved = false;
     }
+
+    moved:boolean;
+
     public canGoPush(): Square[]{
         const canGoArray:Square[] = [];
         this.square.board.squares.forEach(row => {

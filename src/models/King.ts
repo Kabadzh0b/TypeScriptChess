@@ -3,13 +3,17 @@ import { Figure, FigureNames } from "./Figure";
 import { Square } from "./Square";
 import blackLogo from "../pictures/bk.png";
 import whiteLogo from "../pictures/wk.png";
+import { Rook } from "./Rook";
 
 export class King extends Figure{
     constructor(color: Colors, square:Square){
         super(color, square);
         this.logo = color === Colors.White? whiteLogo : blackLogo;
         this.name = FigureNames.King;
+        this.moved = false;
     }
+
+    moved:boolean;
 
     public isChecked(){
         if(this.color === Colors.White && this.square.board.blackChecks.includes(this.square)){
@@ -55,13 +59,14 @@ export class King extends Figure{
     };
 
     public canGo(square:Square): boolean {
-        if(!super.canGo(square))return false;
-        const maxX = Math.max(square.x, this.square.x);
-        const minX = Math.min(square.x, this.square.x);
-        const maxY = Math.max(square.y, this.square.y);
-        const minY = Math.min(square.y, this.square.y);
-        if(maxX - minX <= 1 && maxY - minY <= 1) return true;
-        return false;
+      if(!super.canGo(square))return false;
+      const maxX = Math.max(square.x, this.square.x);
+      const minX = Math.min(square.x, this.square.x);
+      const maxY = Math.max(square.y, this.square.y);
+      const minY = Math.min(square.y, this.square.y);
+      if(maxX - minX <= 1 && maxY - minY <= 1) return true;
+
+      return false;
     }
 
     public canGoPush(): Square[]{

@@ -49,65 +49,102 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         }
     };
 
+    const endTurn = () => {
+        if(turn === Colors.White){
+            if(blackKing.isChecked()){
+                if(blackKing.isCheckmate()){
+                    setTurn("White wins");
+                    return; 
+                }
+            }
+            setTurn(Colors.Black);
+        } 
+        else{
+            if(whiteKing.isChecked()){
+                if(whiteKing.isCheckmate()){
+                    setTurn("Black wins");
+                    return;
+                }
+            }
+            setTurn(Colors.White);
+        }
+    }
+
+    const shortCastling = (selectedSquare:Square, squareTo:Square) => {
+        squareTo.figure = selectedSquare.figure;
+        selectedSquare.figure!.square = squareTo; 
+        selectedSquare.figure = null;
+        const ROOK_SQUARE = board.getSquare(squareTo.x,squareTo.y+1);
+        const ROOK_SQUARE_TO = board.getSquare(squareTo.x,squareTo.y-1);
+        ROOK_SQUARE_TO.figure = ROOK_SQUARE.figure;
+        ROOK_SQUARE.figure!.square = ROOK_SQUARE_TO;
+        ROOK_SQUARE.figure = null;
+    }
+
+    const longCastling = (selectedSquare:Square, squareTo:Square) => {
+        squareTo.figure = selectedSquare.figure;
+        selectedSquare.figure!.square = squareTo; 
+        selectedSquare.figure = null;
+        const ROOK_SQUARE = board.getSquare(squareTo.x,squareTo.y-2);
+        const ROOK_SQUARE_TO = board.getSquare(squareTo.x,squareTo.y+1);
+        ROOK_SQUARE_TO.figure = ROOK_SQUARE.figure;
+        ROOK_SQUARE.figure!.square = ROOK_SQUARE_TO;
+        ROOK_SQUARE.figure = null;
+    }
+
     const move = (selectedSquare:Square, squareTo:Square) => {
         if(selectedSquare.figure?.color === turn && canGo?.includes(squareTo)){
             setSelectedSquare(null);
             setCanGo(null);
-            let squareToFigure = squareTo.figure;
-            squareTo.figure = selectedSquare.figure;
-            selectedSquare.figure.square = squareTo; 
-            selectedSquare.figure = null;
-            board.setChecks();
+            if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y + 2){
+                shortCastling(selectedSquare,squareTo);
+                endTurn();
+            }
+            else if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y - 2){
+                longCastling(selectedSquare,squareTo);
+                endTurn();
+            }
+            else{
+                let squareToFigure = squareTo.figure;
+                squareTo.figure = selectedSquare.figure;
+                selectedSquare.figure.square = squareTo; 
+                selectedSquare.figure = null;
+                board.setChecks();
 
-            if (turn === Colors.White ? !whiteKing.isChecked() : !blackKing.isChecked()){
-                for(let i = 0; i < 8; i++){
-                    if(turn === Colors.White){
-                        if(board.FINAL_WHITE_SQUARES[i].figure?.name === FigureNames.Pawn){
-                            setChooseFigureMenu(Colors.White);
-                            setPawnEvolutionSquare(board.FINAL_WHITE_SQUARES[i]);
-                            delayTurn = true;
+                if (turn === Colors.White ? !whiteKing.isChecked() : !blackKing.isChecked()){
+                    for(let i = 0; i < 8; i++){
+                        if(turn === Colors.White){
+                            if(board.FINAL_WHITE_SQUARES[i].figure?.name === FigureNames.Pawn){
+                                setChooseFigureMenu(Colors.White);
+                                setPawnEvolutionSquare(board.FINAL_WHITE_SQUARES[i]);
+                                delayTurn = true;
+                            }
+                        }
+                        else{
+                            if(board.FINAL_BLACK_SQUARES[i].figure?.name === FigureNames.Pawn){
+                                setChooseFigureMenu(Colors.Black);
+                                setPawnEvolutionSquare(board.FINAL_BLACK_SQUARES[i]);
+                                delayTurn = true;
+                            }
+                        }
+                    }
+                    if(delayTurn === false){
+                        endTurn();
+                        if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
+                            squareTo.figure.moved = true;
                         }
                     }
                     else{
-                        if(board.FINAL_BLACK_SQUARES[i].figure?.name === FigureNames.Pawn){
-                            setChooseFigureMenu(Colors.Black);
-                            setPawnEvolutionSquare(board.FINAL_BLACK_SQUARES[i]);
-                            delayTurn = true;
-                        }
-                    }
-                }
-                if(delayTurn === false){
-                    if(turn === Colors.White){
-                        if(blackKing.isChecked()){
-                            if(blackKing.isCheckmate()){
-                                setTurn("White wins");
-                                return; 
-                            }
-                        }
-                        setTurn(Colors.Black);
-                    } 
-                    else{
-                        if(whiteKing.isChecked()){
-                            if(whiteKing.isCheckmate()){
-                                setTurn("Black wins");
-                                return;
-                            }
-                        }
-                        setTurn(Colors.White);
-                    }
-                    if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
-                        squareTo.figure.moved = true;
+                        setTurn("Choose figure");
                     }
                 }
                 else{
-                    setTurn("Choose figure");
+                    selectedSquare.figure = squareTo.figure;
+                    squareTo.figure.square = selectedSquare;
+                    squareTo.figure = squareToFigure;
                 }
             }
-            else{
-                selectedSquare.figure = squareTo.figure;
-                squareTo.figure.square = selectedSquare;
-                squareTo.figure = squareToFigure;
-            }
+            
         }
         else{
             setSelectedSquare(null);

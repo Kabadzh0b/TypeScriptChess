@@ -17,11 +17,9 @@ export class King extends Figure{
 
     public isChecked(){
         if(this.color === Colors.White && this.square.board.blackChecks.includes(this.square)){
-            console.log("White king is under attack!");
             return true;
         }
         else if(this.color === Colors.Black && this.square.board.whiteChecks.includes(this.square)){
-            console.log("Black king is under attack!");
             return true;
         }
         return false;
@@ -58,6 +56,44 @@ export class King extends Figure{
         );
     };
 
+    private isShortCastlingPossible():boolean{
+      if(this.moved === true) return false;
+      if(this.isChecked()) return false;
+      for(let i = this.square.y + 1; i < 7; i++){
+        let square = this.square.board.getSquare(this.square.x,i);
+        if(!square.isEmpty()
+        || (this.color === Colors.White ? 
+        square.board.blackChecks.includes(square) :
+        square.board.whiteChecks.includes(square))){
+          return false;
+        }
+      }
+      const rookSquare = this.square.board.getSquare(this.square.x,7);
+      if(!(rookSquare.figure instanceof Rook) || rookSquare.figure.moved !== false){
+        return false;
+      }
+      return true;
+    }
+
+    private isLongCastlingPossible():boolean{
+      if(this.moved === true) return false;
+      if(this.isChecked()) return false;
+      for(let i = this.square.y - 1; i > 0; i--){
+        let square = this.square.board.getSquare(this.square.x,i);
+        if(!square.isEmpty()
+        || (this.color === Colors.White ? 
+        square.board.blackChecks.includes(square) :
+        square.board.whiteChecks.includes(square))){
+          return false;
+        }
+      }
+      const rookSquare = this.square.board.getSquare(this.square.x,0);
+      if(!(rookSquare.figure instanceof Rook) || rookSquare.figure.moved !== false){
+        return false;
+      }
+      return true;
+    }
+
     public canGo(square:Square): boolean {
       if(!super.canGo(square))return false;
       const maxX = Math.max(square.x, this.square.x);
@@ -65,6 +101,13 @@ export class King extends Figure{
       const maxY = Math.max(square.y, this.square.y);
       const minY = Math.min(square.y, this.square.y);
       if(maxX - minX <= 1 && maxY - minY <= 1) return true;
+
+      if(square.y === this.square.y - 2 && square.x === this.square.x){
+        return this.isLongCastlingPossible();
+      }
+      if(square.y === this.square.y + 2 && square.x === this.square.x){
+        return this.isShortCastlingPossible();
+      }
 
       return false;
     }

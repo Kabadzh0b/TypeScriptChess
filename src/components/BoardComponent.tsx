@@ -108,46 +108,76 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         ROOK_SQUARE.figure = null;
     }
 
+    const isItCastling = (selectedSquare:Square, squareTo:Square):boolean => {
+        if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y + 2){
+            return true;
+        }
+        return false;
+    }
+
+    const isItShortCastling = (selectedSquare:Square, squareTo:Square):boolean => {
+        if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y + 2){
+            return true;
+        }
+        return false;
+    }
+
+    const isItLongCastling = (selectedSquare:Square, squareTo:Square):boolean => {
+        if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y - 2){
+            return true;
+        }
+        return false;
+    }
+
+    const possibleMove = (squareTo:Square) => {
+        if(isPawnCanEvolve()){
+            turn === Colors.White ? 
+            setChooseFigureMenu(Colors.White) :
+            setChooseFigureMenu(Colors.Black);
+            setTurn("Choose figure");
+        }
+        else{
+            endTurn();
+            if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
+                squareTo.figure.moved = true;
+            }
+        }
+    }
+
+    const unPossibleMove = (selectedSquare:Square, squareTo:Square, squareToFigure:any) => {
+        selectedSquare.figure = squareTo.figure;
+        squareTo.figure!.square = selectedSquare;
+        squareTo.figure = squareToFigure;
+    }
+
     const move = (selectedSquare:Square, squareTo:Square) => {
         if(selectedSquare.figure?.color === turn && canGo?.includes(squareTo)){
             setSelectedSquare(null);
             setCanGo(null);
-            if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y + 2){
-                shortCastling(selectedSquare,squareTo);
-                endTurn();
-            }
-            else if(selectedSquare.figure instanceof King &&     squareTo.y === selectedSquare.y - 2){
-                longCastling(selectedSquare,squareTo);
-                endTurn();
+            if(isItCastling(selectedSquare,squareTo)){
+                if(isItShortCastling(selectedSquare,squareTo)){
+                    shortCastling(selectedSquare,squareTo);
+                    endTurn();
+                }
+                else if(isItLongCastling(selectedSquare,squareTo)){
+                    longCastling(selectedSquare,squareTo);
+                    endTurn();
+                }
             }
             else{
-                let squareToFigure = squareTo.figure;
+                const squareToFigure = squareTo.figure;
                 squareTo.figure = selectedSquare.figure;
                 selectedSquare.figure.square = squareTo; 
                 selectedSquare.figure = null;
                 board.setChecks();
 
                 if (turn === Colors.White ? !whiteKing.isChecked() : !blackKing.isChecked()){
-                    if(isPawnCanEvolve()){
-                        turn === Colors.White ? 
-                        setChooseFigureMenu(Colors.White) :
-                        setChooseFigureMenu(Colors.Black);
-                        setTurn("Choose figure");
-                    }
-                    else{
-                        endTurn();
-                        if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
-                            squareTo.figure.moved = true;
-                        }
-                    }
+                    possibleMove(squareTo);
                 }
                 else{
-                    selectedSquare.figure = squareTo.figure;
-                    squareTo.figure.square = selectedSquare;
-                    squareTo.figure = squareToFigure;
+                    unPossibleMove(selectedSquare,squareTo,squareToFigure);
                 }
             }
-            
         }
         else{
             setSelectedSquare(null);

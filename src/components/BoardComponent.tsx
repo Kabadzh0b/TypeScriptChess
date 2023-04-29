@@ -33,8 +33,6 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
     const whiteKing:King = board.whiteKing;
     const blackKing:King = board.blackKing;
 
-    let delayTurn:boolean = false;
-
     const click = (square:Square) =>{
         if(square === selectedSquare){
             setSelectedSquare(null);
@@ -70,6 +68,24 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
         }
     }
 
+    const isPawnCanEvolve = ():boolean => {
+        for(let i = 0; i < 8; i++){
+            if(turn === Colors.White){
+                if(board.FINAL_WHITE_SQUARES[i].figure?.name === FigureNames.Pawn){
+                    setPawnEvolutionSquare(board.FINAL_WHITE_SQUARES[i]);
+                    return true;
+                }
+            }
+            else{
+                if(board.FINAL_BLACK_SQUARES[i].figure?.name === FigureNames.Pawn){
+                    setPawnEvolutionSquare(board.FINAL_BLACK_SQUARES[i]);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     const shortCastling = (selectedSquare:Square, squareTo:Square) => {
         squareTo.figure = selectedSquare.figure;
         selectedSquare.figure!.square = squareTo; 
@@ -100,7 +116,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 shortCastling(selectedSquare,squareTo);
                 endTurn();
             }
-            else if(selectedSquare.figure instanceof King && squareTo.y === selectedSquare.y - 2){
+            else if(selectedSquare.figure instanceof King &&     squareTo.y === selectedSquare.y - 2){
                 longCastling(selectedSquare,squareTo);
                 endTurn();
             }
@@ -112,30 +128,17 @@ const BoardComponent: FunctionComponent<BoardProps> = ({board,setBoard}) =>{
                 board.setChecks();
 
                 if (turn === Colors.White ? !whiteKing.isChecked() : !blackKing.isChecked()){
-                    for(let i = 0; i < 8; i++){
-                        if(turn === Colors.White){
-                            if(board.FINAL_WHITE_SQUARES[i].figure?.name === FigureNames.Pawn){
-                                setChooseFigureMenu(Colors.White);
-                                setPawnEvolutionSquare(board.FINAL_WHITE_SQUARES[i]);
-                                delayTurn = true;
-                            }
-                        }
-                        else{
-                            if(board.FINAL_BLACK_SQUARES[i].figure?.name === FigureNames.Pawn){
-                                setChooseFigureMenu(Colors.Black);
-                                setPawnEvolutionSquare(board.FINAL_BLACK_SQUARES[i]);
-                                delayTurn = true;
-                            }
-                        }
+                    if(isPawnCanEvolve()){
+                        turn === Colors.White ? 
+                        setChooseFigureMenu(Colors.White) :
+                        setChooseFigureMenu(Colors.Black);
+                        setTurn("Choose figure");
                     }
-                    if(delayTurn === false){
+                    else{
                         endTurn();
                         if(squareTo.figure instanceof Rook || squareTo.figure instanceof King){
                             squareTo.figure.moved = true;
                         }
-                    }
-                    else{
-                        setTurn("Choose figure");
                     }
                 }
                 else{

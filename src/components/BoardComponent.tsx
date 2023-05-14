@@ -23,7 +23,7 @@ interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
 }
-const BoardComponent: FunctionComponent<BoardProps> = ({ board, setBoard }) => {
+const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [canGo, setCanGo] = useState<Square[] | null>(null);
   const [turn, setTurn] = useState<Colors | string>(Colors.White);

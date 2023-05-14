@@ -4,85 +4,78 @@ import { Square } from "./Square";
 import blackLogo from "../pictures/bp.png";
 import whiteLogo from "../pictures/wp.png";
 
-export class Pawn extends Figure{
-    constructor(color: Colors, square:Square){
-        super(color, square);
-        this.logo = color === Colors.White? whiteLogo : blackLogo;
-        this.name = FigureNames.Pawn;
-    }
+export class Pawn extends Figure {
+  constructor(color: Colors, square: Square) {
+    super(color, square);
+    this.logo = color === Colors.White ? whiteLogo : blackLogo;
+    this.name = FigureNames.Pawn;
+  }
 
-    public canGoPush(){
-        const canGoArray:Square[] = [];
-        let x:number = this.square.x;
-        let y:number = this.square.y;
-        if(this.color === Colors.White){
-            if(x !== 0){
-                if (x === 6){
-                    let sq:Square = this.square.board.getSquare(x-1,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq)
-                        sq = this.square.board.getSquare(x-2,y);
-                        if (sq.figure === null){
-                            canGoArray.push(sq)
-                        }
-                    }
-                }
-                else {
-                    let sq:Square = this.square.board.getSquare(x-1,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq);
-                    }
-                }
-                if(y === 7){
-                    let sq:Square = this.square.board.getSquare(x-1,y-1);
-                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
-                }
-                else if (y === 0){
-                    let sq = this.square.board.getSquare(x-1,y+1);
-                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
-                }
-                else{
-                    let sq:Square = this.square.board.getSquare(x-1,y-1);
-                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
-                    sq = this.square.board.getSquare(x-1,y+1);
-                    if(sq.figure?.color === Colors.Black) canGoArray.push(sq);
-                }
+  public canGoPush() {
+    const canGoArray: Square[] = [];
+    let x: number = this.square.x;
+    let y: number = this.square.y;
+    if (this.color === Colors.White) {
+      if (x !== 0) {
+        if (x === 6) {
+          let sq: Square = this.square.board.getSquare(x - 1, y);
+          if (sq.figure === null) {
+            canGoArray.push(sq);
+            sq = this.square.board.getSquare(x - 2, y);
+            if (sq.figure === null) {
+              canGoArray.push(sq);
             }
-        }    
-        else{
-            if (x !== 7){
-                if (x === 1){
-                    let sq:Square = this.square.board.getSquare(x+1,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq)
-                        sq = this.square.board.getSquare(x+2,y);
-                        if (sq.figure === null){
-                            canGoArray.push(sq)
-                        }
-                    }
-                }
-                else{
-                    let sq:Square = this.square.board.getSquare(x+1,y);
-                    if (sq.figure === null){
-                        canGoArray.push(sq);
-                    }
-                }
-                if(y === 7){
-                    let sq:Square = this.square.board.getSquare(x+1,y-1);
-                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
-                }
-                else if (y === 0){
-                    let sq = this.square.board.getSquare(x+1,y+1);
-                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
-                }
-                else{
-                    let sq:Square = this.square.board.getSquare(x+1,y-1);
-                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
-                    sq = this.square.board.getSquare(x+1,y+1);
-                    if(sq.figure?.color === Colors.White) canGoArray.push(sq);
-                }
-            }
+          }
+        } else {
+          let sq: Square = this.square.board.getSquare(x - 1, y);
+          if (sq.figure === null) {
+            canGoArray.push(sq);
+          }
         }
-        return canGoArray;
+        if (y === 7) {
+          let sq: Square = this.square.board.getSquare(x - 1, y - 1);
+          if (sq.figure?.color === Colors.Black) canGoArray.push(sq);
+        } else if (y === 0) {
+          let sq = this.square.board.getSquare(x - 1, y + 1);
+          if (sq.figure?.color === Colors.Black) canGoArray.push(sq);
+        } else {
+          let sq: Square = this.square.board.getSquare(x - 1, y - 1);
+          if (sq.figure?.color === Colors.Black) canGoArray.push(sq);
+          sq = this.square.board.getSquare(x - 1, y + 1);
+          if (sq.figure?.color === Colors.Black) canGoArray.push(sq);
+        }
+      }
+    } else {
+      if (x !== 7) {
+        if (x === 1) {
+          let sq: Square = this.square.board.getSquare(x + 1, y);
+          if (sq.figure === null) {
+            canGoArray.push(sq);
+            sq = this.square.board.getSquare(x + 2, y);
+            if (sq.figure === null) {
+              canGoArray.push(sq);
+            }
+          }
+        } else {
+          let sq: Square = this.square.board.getSquare(x + 1, y);
+          if (sq.figure === null) {
+            canGoArray.push(sq);
+          }
+        }
+        if (y === 7) {
+          let sq: Square = this.square.board.getSquare(x + 1, y - 1);
+          if (sq.figure?.color === Colors.White) canGoArray.push(sq);
+        } else if (y === 0) {
+          let sq = this.square.board.getSquare(x + 1, y + 1);
+          if (sq.figure?.color === Colors.White) canGoArray.push(sq);
+        } else {
+          let sq: Square = this.square.board.getSquare(x + 1, y - 1);
+          if (sq.figure?.color === Colors.White) canGoArray.push(sq);
+          sq = this.square.board.getSquare(x + 1, y + 1);
+          if (sq.figure?.color === Colors.White) canGoArray.push(sq);
+        }
+      }
     }
+    return canGoArray;
+  }
 }

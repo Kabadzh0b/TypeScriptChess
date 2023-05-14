@@ -1,9 +1,9 @@
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.app{
+.app {
   width: 100vw;
   height: 100vh;
   display: grid;
@@ -12,16 +12,16 @@
   text-align: center;
 }
 
-.board{
-  width: calc(80px*8);
-  height: calc(80px*8);
+.board {
+  width: calc(80px * 8);
+  height: calc(80px * 8);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
 
-.square{
+.square {
   width: 80px;
   height: 80px;
   display: flex;
@@ -29,29 +29,29 @@
   align-items: center;
 }
 
-.white{
+.white {
   background-color: rgb(150, 229, 245);
 }
 
-.black{
+.black {
   background-color: rgb(27, 139, 14);
 }
 
-.square img{
+.square img {
   width: 80px;
   height: 80px;
   position: relative;
 }
 
-.selected{
+.selected {
   background-color: rgb(161, 255, 161);
 }
 
-.canGo{
+.canGo {
   background-color: red;
 }
 
-.chooseFigure{
+.chooseFigure {
   height: 80px;
   width: 80px;
   display: inline-grid;
@@ -60,6 +60,6 @@
   background-color: blue;
 }
 
-.hidden{
+.hidden {
   display: none;
 }

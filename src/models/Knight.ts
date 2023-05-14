@@ -15,10 +15,7 @@ export class Knight extends Figure {
     if (!super.canGo(square)) return false;
     const dx = Math.abs(square.x - this.square.x);
     const dy = Math.abs(square.y - this.square.y);
-    if ((dx === 1 && dy === 2) || (dx === 2 && dy === 1)) {
-      return true;
-    }
-    return false;
+    return (dx === 1 && dy === 2) || (dx === 2 && dy === 1);
   }
 
   public canGoPush() {

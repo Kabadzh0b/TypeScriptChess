@@ -108,39 +108,30 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board, setBoard }) => {
   };
 
   const isItCastling = (selectedSquare: Square, squareTo: Square): boolean => {
-    if (
+    return (
       selectedSquare.figure instanceof King &&
       squareTo.y === selectedSquare.y + 2
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
 
   const isItShortCastling = (
     selectedSquare: Square,
     squareTo: Square
   ): boolean => {
-    if (
+    return (
       selectedSquare.figure instanceof King &&
       squareTo.y === selectedSquare.y + 2
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
 
   const isItLongCastling = (
     selectedSquare: Square,
     squareTo: Square
   ): boolean => {
-    if (
+    return (
       selectedSquare.figure instanceof King &&
       squareTo.y === selectedSquare.y - 2
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
 
   const possibleMove = (squareTo: Square) => {

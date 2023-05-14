@@ -16,8 +16,7 @@ export class Square {
   board: Board;
 
   public isEmpty(): boolean {
-    if (this.figure === null) return true;
-    return false;
+    return this.figure === null;
   }
 
   constructor(

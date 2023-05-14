@@ -31,7 +31,7 @@ export class King extends Figure {
   }
 
   public isCheckmate = (): boolean => {
-    return !this.square.board.squares.some((row: Square[], index: number) =>
+    return !this.square.board.squares.some((row: Square[]) =>
       row.some((square: Square) => {
         if (square.figure !== null && square.figure.color === this.color) {
           const canGoPush: Square[] = square.figure.canGoPush();
@@ -62,7 +62,7 @@ export class King extends Figure {
   };
 
   private isShortCastlingPossible(): boolean {
-    if (this.moved === true) return false;
+    if (this.moved) return false;
     if (this.isChecked()) return false;
     for (let i = this.square.y + 1; i < 7; i++) {
       let square = this.square.board.getSquare(this.square.x, i);
@@ -76,17 +76,11 @@ export class King extends Figure {
       }
     }
     const rookSquare = this.square.board.getSquare(this.square.x, 7);
-    if (
-      !(rookSquare.figure instanceof Rook) ||
-      rookSquare.figure.moved !== false
-    ) {
-      return false;
-    }
-    return true;
+    return !(!(rookSquare.figure instanceof Rook) || rookSquare.figure.moved);
   }
 
   private isLongCastlingPossible(): boolean {
-    if (this.moved === true) return false;
+    if (this.moved) return false;
     if (this.isChecked()) return false;
     for (let i = this.square.y - 1; i > 0; i--) {
       let square = this.square.board.getSquare(this.square.x, i);
@@ -100,13 +94,7 @@ export class King extends Figure {
       }
     }
     const rookSquare = this.square.board.getSquare(this.square.x, 0);
-    if (
-      !(rookSquare.figure instanceof Rook) ||
-      rookSquare.figure.moved !== false
-    ) {
-      return false;
-    }
-    return true;
+    return !(!(rookSquare.figure instanceof Rook) || rookSquare.figure.moved);
   }
 
   public canGo(square: Square): boolean {

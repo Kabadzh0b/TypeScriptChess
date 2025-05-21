@@ -4,7 +4,7 @@ import Board from '../models/Board';
 import { Square } from '../models/Square';
 import { Colors } from '../models/Colors';
 import { King } from '../models/King';
-import { FigureNames } from '../models/Figure';
+import { FigureNames, FigureType } from '../models/Figure';
 import { Queen } from '../models/Queen';
 import { Bishop } from '../models/Bishop';
 import { Knight } from '../models/Knight';
@@ -68,7 +68,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board }) => {
     }
   };
 
-  const isPawnCanEvolve = (): boolean => {
+  const getIsPawnCanEvolve = (): boolean => {
     for (let i = 0; i < 8; i++) {
       if (turn === Colors.White) {
         if (board.FINAL_WHITE_SQUARES[i].figure?.name === FigureNames.Pawn) {
@@ -135,23 +135,25 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board }) => {
   };
 
   const possibleMove = (squareTo: Square) => {
-    if (isPawnCanEvolve()) {
-      turn === Colors.White
-        ? setChooseFigureMenu(Colors.White)
-        : setChooseFigureMenu(Colors.Black);
-      setTurn('Choose figure');
-    } else {
-      endTurn();
-      if (squareTo.figure instanceof Rook || squareTo.figure instanceof King) {
-        squareTo.figure.moved = true;
+    if (getIsPawnCanEvolve()) {
+      if (turn === Colors.White) {
+        setChooseFigureMenu(Colors.White);
+      } else {
+        setChooseFigureMenu(Colors.Black);
       }
+      setTurn('Choose figure');
+      return;
+    }
+    endTurn();
+    if (squareTo.figure instanceof Rook || squareTo.figure instanceof King) {
+      squareTo.figure.moved = true;
     }
   };
 
   const unPossibleMove = (
     selectedSquare: Square,
     squareTo: Square,
-    squareToFigure: any
+    squareToFigure: FigureType | null
   ) => {
     selectedSquare.figure = squareTo.figure;
     squareTo.figure!.square = selectedSquare;

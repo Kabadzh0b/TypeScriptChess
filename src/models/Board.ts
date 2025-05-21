@@ -6,6 +6,7 @@ import { Knight } from './Knight';
 import { Bishop } from './Bishop';
 import { Queen } from './Queen';
 import { King } from './King';
+import { FigureConstructor } from './Figure';
 export default class Board {
   squares: Square[][] = [];
   whiteChecks: Square[] = [];
@@ -57,7 +58,7 @@ export default class Board {
     return this.squares[x][y];
   }
 
-  public pawnEvolution(square: Square, Figure: any) {
+  public pawnEvolution(square: Square, Figure: FigureConstructor) {
     new Figure(square.figure!.color, square);
   }
   /*
@@ -74,10 +75,14 @@ export default class Board {
         ];
     }
 */
-  public placeFigure(positions: number[], color: Colors, type: any): void {
+  public placeFigure(
+    positions: number[],
+    color: Colors,
+    Figure: FigureConstructor
+  ): void {
     const x: number = positions[0];
     const y: number = positions[1];
-    new type(color, this.getSquare(x, y));
+    new Figure(color, this.getSquare(x, y));
   }
   /*
     public placePawns():void{
@@ -179,14 +184,14 @@ export default class Board {
     const BLACK_PLAYER_POSITIONS = [BRPos, BKnPos, BBPos, BQPos, BPPos];
     const TYPES = [Rook, Knight, Bishop, Queen, Pawn];
     for (let i = 0; i < 5; i++) {
-      const type = TYPES[i];
+      const FigureConstructor = TYPES[i];
       const WPos: number[][] = WHITE_PLAYER_POSITIONS[i];
       const BPos: number[][] = BLACK_PLAYER_POSITIONS[i];
       for (const position of WPos) {
-        this.placeFigure(position, Colors.White, type);
+        this.placeFigure(position, Colors.White, FigureConstructor);
       }
       for (const position of BPos) {
-        this.placeFigure(position, Colors.Black, type);
+        this.placeFigure(position, Colors.Black, FigureConstructor);
       }
     }
     this.whiteKing = new King(Colors.White, this.getSquare(WKPos[0], WKPos[1]));

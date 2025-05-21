@@ -18,15 +18,17 @@ const SquareComponent: FunctionComponent<SquareProps> = ({
   selectedSquare,
   canGo,
 }) => {
+  const onClick = () => {
+    if (selectedSquare && selectedSquare !== square && selectedSquare.figure) {
+      move(selectedSquare, square);
+      return;
+    }
+    setIsSelected(square);
+  };
+
   return (
     <div
-      onClick={() => {
-        selectedSquare !== square &&
-        selectedSquare !== null &&
-        selectedSquare.figure !== null
-          ? move(selectedSquare, square)
-          : setIsSelected(square);
-      }}
+      onClick={onClick}
       className={[
         'square',
         square.color,

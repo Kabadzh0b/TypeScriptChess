@@ -1,6 +1,12 @@
 import { Colors } from './Colors';
 import { Square } from './Square';
 import logoType from '../pictures/bb.png';
+import { King } from './King';
+import { Rook } from './Rook';
+import { Bishop } from './Bishop';
+import { Knight } from './Knight';
+import { Queen } from './Queen';
+import { Pawn } from './Pawn';
 
 export enum FigureNames {
   King = 'king',
@@ -10,6 +16,10 @@ export enum FigureNames {
   Knight = 'knight',
   Pawn = 'pawn',
 }
+
+export type FigureType = King | Rook | Bishop | Knight | Queen | Pawn;
+
+export type FigureConstructor = new (color: Colors, square: Square) => Figure;
 
 export class Figure {
   color: Colors;

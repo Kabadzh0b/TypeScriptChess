@@ -1,29 +1,29 @@
-import React, { FunctionComponent, useState } from "react";
-import SquareComponent from "./SquareComponent";
-import Board from "../models/Board";
-import { Square } from "../models/Square";
-import { Colors } from "../models/Colors";
-import { King } from "../models/King";
-import { FigureNames } from "../models/Figure";
-import { Queen } from "../models/Queen";
-import { Bishop } from "../models/Bishop";
-import { Knight } from "../models/Knight";
-import { Rook } from "../models/Rook";
+import React, { FunctionComponent, useState } from 'react';
+import SquareComponent from './SquareComponent';
+import Board from '../models/Board';
+import { Square } from '../models/Square';
+import { Colors } from '../models/Colors';
+import { King } from '../models/King';
+import { FigureNames } from '../models/Figure';
+import { Queen } from '../models/Queen';
+import { Bishop } from '../models/Bishop';
+import { Knight } from '../models/Knight';
+import { Rook } from '../models/Rook';
 
-import blackQueenLogo from "../pictures/bq.png";
-import whiteQueenLogo from "../pictures/wq.png";
-import blackBishopLogo from "../pictures/bb.png";
-import whiteBishopLogo from "../pictures/wb.png";
-import blackKnightLogo from "../pictures/bn.png";
-import whiteKnightLogo from "../pictures/wn.png";
-import blackRookLogo from "../pictures/br.png";
-import whiteRookLogo from "../pictures/wr.png";
+import blackQueenLogo from '../pictures/bq.png';
+import whiteQueenLogo from '../pictures/wq.png';
+import blackBishopLogo from '../pictures/bb.png';
+import whiteBishopLogo from '../pictures/wb.png';
+import blackKnightLogo from '../pictures/bn.png';
+import whiteKnightLogo from '../pictures/wn.png';
+import blackRookLogo from '../pictures/br.png';
+import whiteRookLogo from '../pictures/wr.png';
 
 interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
 }
-const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
+const BoardComponent: FunctionComponent<BoardProps> = ({ board }) => {
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [canGo, setCanGo] = useState<Square[] | null>(null);
   const [turn, setTurn] = useState<Colors | string>(Colors.White);
@@ -52,7 +52,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
     if (turn === Colors.White) {
       if (blackKing.isChecked()) {
         if (blackKing.isCheckmate()) {
-          setTurn("White wins");
+          setTurn('White wins');
           return;
         }
       }
@@ -60,7 +60,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
     } else {
       if (whiteKing.isChecked()) {
         if (whiteKing.isCheckmate()) {
-          setTurn("Black wins");
+          setTurn('Black wins');
           return;
         }
       }
@@ -139,7 +139,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
       turn === Colors.White
         ? setChooseFigureMenu(Colors.White)
         : setChooseFigureMenu(Colors.Black);
-      setTurn("Choose figure");
+      setTurn('Choose figure');
     } else {
       endTurn();
       if (squareTo.figure instanceof Rook || squareTo.figure instanceof King) {
@@ -215,8 +215,8 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
           </React.Fragment>
         ))}
       </div>
-      <div className={chooseFigureMenu === null ? "hidden" : ""}>
-        <div className={chooseFigureMenu === Colors.White ? "" : "hidden"}>
+      <div className={chooseFigureMenu === null ? 'hidden' : ''}>
+        <div className={chooseFigureMenu === Colors.White ? '' : 'hidden'}>
           <div
             onClick={() => {
               setChooseFigureMenu(null);
@@ -258,7 +258,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
             <img className="square img" src={whiteKnightLogo} alt="figure" />
           </div>
         </div>
-        <div className={chooseFigureMenu === Colors.Black ? "" : "hidden"}>
+        <div className={chooseFigureMenu === Colors.Black ? '' : 'hidden'}>
           <div
             onClick={() => {
               setChooseFigureMenu(null);
@@ -305,7 +305,3 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
   );
 };
 export default BoardComponent;
-
-/*
-
-*/

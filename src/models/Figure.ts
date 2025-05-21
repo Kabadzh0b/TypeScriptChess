@@ -1,14 +1,14 @@
-import { Colors } from "./Colors";
-import { Square } from "./Square";
-import logoType from "../pictures/bb.png";
+import { Colors } from './Colors';
+import { Square } from './Square';
+import logoType from '../pictures/bb.png';
 
 export enum FigureNames {
-  King = "king",
-  Queen = "queen",
-  Rook = "rook",
-  Bishop = "bishop",
-  Knight = "knight",
-  Pawn = "pawn",
+  King = 'king',
+  Queen = 'queen',
+  Rook = 'rook',
+  Bishop = 'bishop',
+  Knight = 'knight',
+  Pawn = 'pawn',
 }
 
 export class Figure {

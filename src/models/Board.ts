@@ -1,11 +1,11 @@
-import { Square } from "./Square";
-import { Colors } from "./Colors";
-import { Pawn } from "./Pawn";
-import { Rook } from "./Rook";
-import { Knight } from "./Knight";
-import { Bishop } from "./Bishop";
-import { Queen } from "./Queen";
-import { King } from "./King";
+import { Square } from './Square';
+import { Colors } from './Colors';
+import { Pawn } from './Pawn';
+import { Rook } from './Rook';
+import { Knight } from './Knight';
+import { Bishop } from './Bishop';
+import { Queen } from './Queen';
+import { King } from './King';
 export default class Board {
   squares: Square[][] = [];
   whiteChecks: Square[] = [];
@@ -179,9 +179,9 @@ export default class Board {
     const BLACK_PLAYER_POSITIONS = [BRPos, BKnPos, BBPos, BQPos, BPPos];
     const TYPES = [Rook, Knight, Bishop, Queen, Pawn];
     for (let i = 0; i < 5; i++) {
-      let type = TYPES[i];
-      let WPos: number[][] = WHITE_PLAYER_POSITIONS[i];
-      let BPos: number[][] = BLACK_PLAYER_POSITIONS[i];
+      const type = TYPES[i];
+      const WPos: number[][] = WHITE_PLAYER_POSITIONS[i];
+      const BPos: number[][] = BLACK_PLAYER_POSITIONS[i];
       for (const position of WPos) {
         this.placeFigure(position, Colors.White, type);
       }

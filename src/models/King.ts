@@ -1,9 +1,9 @@
-import { Colors } from "./Colors";
-import { Figure, FigureNames } from "./Figure";
-import { Square } from "./Square";
-import blackLogo from "../pictures/bk.png";
-import whiteLogo from "../pictures/wk.png";
-import { Rook } from "./Rook";
+import { Colors } from './Colors';
+import { Figure, FigureNames } from './Figure';
+import { Square } from './Square';
+import blackLogo from '../pictures/bk.png';
+import whiteLogo from '../pictures/wk.png';
+import { Rook } from './Rook';
 
 export class King extends Figure {
   constructor(color: Colors, square: Square) {
@@ -65,7 +65,7 @@ export class King extends Figure {
     if (this.moved) return false;
     if (this.isChecked()) return false;
     for (let i = this.square.y + 1; i < 7; i++) {
-      let square = this.square.board.getSquare(this.square.x, i);
+      const square = this.square.board.getSquare(this.square.x, i);
       if (
         !square.isEmpty() ||
         (this.color === Colors.White
@@ -83,7 +83,7 @@ export class King extends Figure {
     if (this.moved) return false;
     if (this.isChecked()) return false;
     for (let i = this.square.y - 1; i > 0; i--) {
-      let square = this.square.board.getSquare(this.square.x, i);
+      const square = this.square.board.getSquare(this.square.x, i);
       if (
         !square.isEmpty() ||
         (this.color === Colors.White

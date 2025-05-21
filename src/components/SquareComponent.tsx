@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
-import { Square } from "../models/Square";
+import React, { FunctionComponent } from 'react';
+import { Square } from '../models/Square';
 
 interface SquareProps {
   square: Square;
@@ -28,11 +28,11 @@ const SquareComponent: FunctionComponent<SquareProps> = ({
           : setIsSelected(square);
       }}
       className={[
-        "square",
+        'square',
         square.color,
-        isSelected ? "selected" : "",
-        canGo !== null ? (canGo.includes(square) ? "canGo" : "") : "",
-      ].join(" ")}
+        isSelected ? 'selected' : '',
+        canGo !== null ? (canGo.includes(square) ? 'canGo' : '') : '',
+      ].join(' ')}
     >
       <div className="figure">
         {square.figure?.logo && <img src={square.figure.logo} alt="figure" />}

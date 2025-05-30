@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -25,12 +26,6 @@
     "lint-win-fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "format-win": "prettier --write \"src/**/*.{ts,tsx}\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

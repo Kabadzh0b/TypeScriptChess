@@ -1,4 +1,4 @@
-import Board from './Board';
+import Board from './Board/Board';
 import { Colors } from './Colors';
 import { FigureType } from './Figure';
 

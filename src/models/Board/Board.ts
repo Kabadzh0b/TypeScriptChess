@@ -1,12 +1,12 @@
-import { Square } from './Square';
-import { Colors } from './Colors';
-import { Pawn } from './Pawn';
-import { Rook } from './Rook';
-import { Knight } from './Knight';
-import { Bishop } from './Bishop';
-import { Queen } from './Queen';
-import { King } from './King';
-import { FigureConstructor } from './Figure';
+import { Square } from '../Square';
+import { Colors } from '../Colors';
+import { Pawn } from '../Pawn';
+import { Rook } from '../Rook';
+import { Knight } from '../Knight';
+import { Bishop } from '../Bishop';
+import { Queen } from '../Queen';
+import { King } from '../King';
+import { FigureConstructor } from '../Figure';
 export default class Board {
   squares: Square[][] = [];
   whiteChecks: Square[] = [];
@@ -61,20 +61,7 @@ export default class Board {
   public pawnEvolution(square: Square, Figure: FigureConstructor) {
     new Figure(square.figure!.color, square);
   }
-  /*
-    public placeFiguresB():void{
-        const FIGURES = [
-            ["R","KN","B","Q","K","B","KN","R"],
-            ["P","P","P","P","P","P","P","P"],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["p","p","p","p","p","p","p","p"],
-            ["r","kn","b","q","k","b","kn","r"]
-        ];
-    }
-*/
+
   public placeFigure(
     positions: number[],
     color: Colors,
@@ -84,45 +71,7 @@ export default class Board {
     const y: number = positions[1];
     new Figure(color, this.getSquare(x, y));
   }
-  /*
-    public placePawns():void{
-        for(let i = 0; i < 8; i++){
-            new Pawn(Colors.Black,this.getSquare(1,i));
-            new Pawn(Colors.White,this.getSquare(6,i));
-        }
-    }
-    
-    public placeRooks():void{
-        new Rook(Colors.Black, this.getSquare(0,0));
-        new Rook(Colors.Black, this.getSquare(0,7));
-        new Rook(Colors.White, this.getSquare(7,0));
-        new Rook(Colors.White, this.getSquare(7,7));
-    }
 
-    public placeKnights():void{
-        new Knight(Colors.Black, this.getSquare(0,1));
-        new Knight(Colors.Black, this.getSquare(0,6));
-        new Knight(Colors.White, this.getSquare(7,1));
-        new Knight(Colors.White, this.getSquare(7,6));
-    }
-
-    public placeBishops():void{
-        new Bishop(Colors.Black, this.getSquare(0,2));
-        new Bishop(Colors.Black, this.getSquare(0,5));
-        new Bishop(Colors.White, this.getSquare(7,2));
-        new Bishop(Colors.White, this.getSquare(7,5));
-    }
-
-    public placeQueen():void{
-        new Queen(Colors.Black, this.getSquare(0,3));
-        new Queen(Colors.White, this.getSquare(7,3));
-    }
-
-    public placeKing():void{
-        this.blackKing = new King(Colors.Black, this.getSquare(0,4));
-        this.whiteKing = new King(Colors.White, this.getSquare(7,4));
-    }
-*/
   public placeFigures(
     WKPos: number[] = [7, 4],
     WRPos: number[][] = [
@@ -173,12 +122,6 @@ export default class Board {
       [1, 7],
     ]
   ): void {
-    /*this.placePawns();
-        this.placeRooks();
-        this.placeKnights();
-        this.placeBishops();
-        this.placeQueen();
-        this.placeKing();*/
     this.initFinalCells();
     const WHITE_PLAYER_POSITIONS = [WRPos, WKnPos, WBPos, WQPos, WPPos];
     const BLACK_PLAYER_POSITIONS = [BRPos, BKnPos, BBPos, BQPos, BPPos];

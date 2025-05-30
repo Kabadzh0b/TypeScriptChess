@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import SquareComponent from './SquareComponent';
-import Board from '../models/Board';
+import Board from '../models/Board/Board';
 import { Square } from '../models/Square';
 import { Colors } from '../models/Colors';
 import { King } from '../models/King';

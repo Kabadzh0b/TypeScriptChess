@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import SquareComponent from "./SquareComponent";
 import Board from "../models/Board";
 import { Square } from "../models/Square";
@@ -23,7 +23,7 @@ interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
 }
-const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
+const BoardComponent: FunctionComponent<BoardProps> = ({ board }) => {
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [canGo, setCanGo] = useState<Square[] | null>(null);
   const [turn, setTurn] = useState<Colors | string>(Colors.White);
@@ -31,6 +31,13 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
   const [pawnEvolutionSquare, setPawnEvolutionSquare] = useState<Square | null>(
     null
   );
+
+  useEffect(() => {
+    setTurn(Colors.White);
+    setSelectedSquare(null);
+    setCanGo(null);
+    setChooseFigureMenu(null);
+  }, [board]);
 
   const whiteKing: King = board.whiteKing;
   const blackKing: King = board.blackKing;

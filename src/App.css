@@ -63,3 +63,30 @@
 .hidden {
   display: none;
 }
+
+.restartButton {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+
+  background-image: linear-gradient(to bottom right, rgb(161, 255, 161), rgb(150, 229, 245));
+
+  border: 2px solid #4a3c31;
+
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.1),
+    inset 0 2px 5px rgba(255, 255, 255, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 50;
+  cursor: pointer;
+  transition: all 300ms ease;
+}

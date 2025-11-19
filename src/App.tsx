@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import BoardComponent from "./components/BoardComponent";
 import Board from "./models/Board";
+import { TimerComponent } from "./components/TimerComponent";
+import { Colors } from "./models/Colors";
 
 function App() {
   const [board, setBoard] = useState(new Board());
+  const [turn, setTurn] = useState<Colors>(Colors.White);
 
   useEffect(() => {
     restart();
@@ -19,7 +22,8 @@ function App() {
 
   return (
     <div className="app">
-      <BoardComponent board={board} setBoard={setBoard} />
+      <BoardComponent board={board} setBoard={setBoard} turn={turn} setTurn={setTurn} />
+      <TimerComponent board={board} turn={turn} setTurn={setTurn} />
       <button 
           className="restartButton"
           onClick={restart}

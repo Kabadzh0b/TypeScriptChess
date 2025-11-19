@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import SquareComponent from "./SquareComponent";
 import Board from "../models/Board";
 import { Square } from "../models/Square";
@@ -22,15 +22,23 @@ import whiteRookLogo from "../pictures/wr.png";
 interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
+  turn: Colors | string;
+  setTurn: any
 }
-const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
+const BoardComponent: FunctionComponent<BoardProps> = ({ board, setTurn, turn }) => {
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [canGo, setCanGo] = useState<Square[] | null>(null);
-  const [turn, setTurn] = useState<Colors | string>(Colors.White);
   const [chooseFigureMenu, setChooseFigureMenu] = useState<Colors | null>(null);
   const [pawnEvolutionSquare, setPawnEvolutionSquare] = useState<Square | null>(
     null
   );
+
+  useEffect(() => {
+    setTurn(Colors.White);
+    setSelectedSquare(null);
+    setCanGo(null);
+    setChooseFigureMenu(null);
+  }, [board]);
 
   const whiteKing: King = board.whiteKing;
   const blackKing: King = board.blackKing;
@@ -196,7 +204,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({ board}) => {
   return (
     <div>
       <div>
-        <h1>Turn: {turn}</h1>
+        <h1 className="turn">Turn: {turn}</h1>
       </div>
       <div className="board">
         {board.squares.map((row: Square[], index: number) => (

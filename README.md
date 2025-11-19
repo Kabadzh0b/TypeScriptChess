@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# TypeScriptChess
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Команда:**
+- Максим Чуб
+- Пастернак Іван
 
-## Available Scripts
+**Опис:** навчальний веб-проєкт — реалізація класичної гри в шахи з використанням React + TypeScript
 
-In the project directory, you can run:
+**Ключова ідея проєкту**
+- **Мета:** навчитися проектувати ігровий додаток, виділяючи логіку гри в моделі та використовуючи React для рендерингу й управління станом.
 
-### `npm start`
+**Проектування**
+- **Структура:** код розподілений на `src/models` (логіка шахів, класи фігур, дошка, квадрат), `src/components` (UI-компоненти: `BoardComponent.tsx`, `SquareComponent.tsx`, `TimerComponent.tsx`), та статичні ресурси в `src/pictures`.
+- **Відокремлення відповідальностей:** моделі відповідають за правила (які ходи можливі, виконання ходу, стан дошки), компоненти — за відображення і взаємодію з користувачем. Це спрощує тестування і подальше розширення.
+- **Типізація:** TypeScript забезпечує явні інтерфейси та класи, що зменшує помилки на часі розробки.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Ігровий рушій — Web DOM API + React**
+- Оскільки проект побудований як веб‑додаток на React + TypeScript, не було потреби створювати окремий «низькорівневий» рушій (engine). Логіка гри інкапсульована у TypeScript‑моделях (`src/models`) і виконується в браузері — React відповідає за рендеринг та взаємодію з DOM. Такий підхід достатній для реалізації та полегшує відлагодження і розширення.
+- **React + Virtual DOM:** UI реалізовано як набір React‑компонентів. Коли оновлюється стан (наприклад, зміни у моделі `Board`), викликається оновлення стану React (`setState` / Hook), React обчислює мінімальні зміни та застосовує їх до реального DOM через браузерні DOM API.
+- **Де зберігається стан:** логічний стан дошки зберігається у класі `Board` у `src/models/Board.ts` та/або в React‑стані компонента верхнього рівня (наприклад, в `App.tsx` або `BoardComponent`). Компоненти отримують `board` як параметри або отримують колбеки для зміни стану.
+- **Як відбувається рендеринг:** `BoardComponent.tsx` ітерує модель дошки і створює сітку з `SquareComponent.tsx`. Кожен `SquareComponent` відображає фігуру (якщо є) та реагує на кліки. Після виконання ходу модель змінюється, React отримує оновлений стан, відбувається повторний рендер тільки тих компонентів, чий стан змінився.
+- **Чому виділені компоненти:** `BoardComponent` — логіка побудови сітки, `SquareComponent` — незалежне відображення клітинки і її інтерфейсу (зручне для оптимізації і повторного використання), `TimerComponent` — ізольована логіка таймера, щоб не забруднювати основний UI.
+- **Подія/обробка:** події кліку обробляються через React synthetic events, які делегуються до компоненту; компоненти викликають методи моделей для валідації і виконання ходів.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Моделі (файли)**
+- **Класи:** `src/models/Figure.ts`, `Pawn.ts`, `Bishop.ts`, `Knight.ts`, `Rook.ts`, `Queen.ts`, `King.ts` — кожен реалізує специфіку ходів та перевірки легальності.
+- **Інші:** `src/models/Square.ts` — опис клітинки; `src/models/Board.ts` — представлення дошки, розміщення фігур, логіка виконання ходу.
 
-### `npm test`
+**Розробка контенту**
+- **Зображення фігур:** у каталог `src/pictures` додано набори зображень фігур (білі/чорні). Файли підключаються в компонентах або асоціюються з екземплярами класів фігур.
+- **Використання:** `SquareComponent` рендерить `<img src={figure.image} />` або інлайн‑імітацію зображення залежно від наявності фігури в даній клітинці; це дає гнучкість у заміні графіки (спрайти або SVG).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Розробка ігрових механік**
+- **Генерація можливих ходів:** для кожної фігури реалізований метод, який повертає набір потенційних ходів згідно правил (пішак — вперед/взяття по діагоналі/підвищення, слон — по діагоналях, тура — по лініях, кінь — L‑фігура тощо).
+- **Перевірка перешкод:** для фігур, що рухаються вздовж ліній (тури, слони, ферзі), при генерації ходів враховуються проміжні клітини — рух зупиняється при зустрічі власної фігури або дозволяє взяття при зустрічі ворожої.
+- **Фільтрація на легальні ходи:** на етапі валідації згенеровані потенційні ходи фільтруються за правилом «не залишати або не поставити власного короля під шах». Це робиться емулюванням ходу на копії позиції (або тимчасовим застосуванням і відкатом) та перевіркою, чи буде король атакований після ходу.
+- **Обчислення загроз / шах:** для перевірки, чи під шахом король, система перебирає можливі атаки від усіх ворожих фігур щодо квадрату короля (або генерує всі можливі ходи суперника і перевіряє, чи потрапляє серед них квадрат короля). Якщо є хоча б одна така атака — король в шаху.
+- **Мат (checkmate) і захист:** коли король під шахом, система генерує всі можливі легальні ходи для сторони під шахом; якщо жоден легальний хід не усуває шах (тобто король продовжує знаходитись під атакою після будь‑якого з них), то це мат — гра закінчується програшем сторони, чиїй черзі ходити.
 
-### `npm run build`
+**Механіка завершення гри**
+- **Перемога через мат:** реалізовано виявлення мату описаним вище способом — коли у гравця немає легальних ходів і король під шахом.
+- **Пат (stalemate):** якщо у гравця немає легальних ходів, але король не під шахом, позиція вважається патом — нічия.
+- **Таймер:** `TimerComponent` відслідковує час гравців; якщо час одного з гравців вичерпується, він програє за часом.
+- **Рестарт/скидання:** кнопка рестарту відновлює початкову позицію на `Board` та скидає таймери; це дозволяє швидко почати нову партію.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Як запускати (коротко)**
+- Встановити залежності: `npm install`
+- Запуск у режимі розробки: `npm start` (відкриється `http://localhost:3000`)
